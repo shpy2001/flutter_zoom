@@ -274,6 +274,8 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             meetingSettings?.meetingTitleHidden = true;
             meetingSettings?.meetingPasswordHidden = true;
             meetingSettings?.meetingParticipantHidden = true;
+            // meetingSettings?.topBarHidden = true;
+            // meetingSettings?.enableCustomMeeting = true;
             meetingSettings?.setMuteVideoWhenJoinMeeting(false)
             meetingSettings?.disableShowVideoPreview(whenJoinMeeting:true)
             
@@ -452,8 +454,44 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         case .connecting:
             message = ["MEETING_STATUS_CONNECTING", "Connect to the meeting server"]
             break
+        case .waitingForHost:
+            message = ["MEETING_STATUS_WAITINGFORHOST", "Waiting for the host to start the meeting."]
+            break
         case .inMeeting:
             message = ["MEETING_STATUS_INMEETING", "Meeting is ready and in process"]
+            break
+        case .disconnecting:
+            message = ["MEETING_STATUS_DISCONNECTING", "Disconnect the meeting server, user leaves meeting."]
+            break
+        case .reconnecting:
+            message = ["MEETING_STATUS_RECONNECTING", "Reconnecting meeting server."]
+            break
+        case .failed:
+            message = ["MEETING_STATUS_FAILED", "Failed to connect the meeting server."]
+            break
+        case .ended:
+            message = ["MEETING_STATUS_ENDED", "Meeting ends."]
+            break
+        case .unknow:
+            message = ["MEETING_STATUS_UNKNOWN", "Unknown status."]
+            break
+        case .locked:
+            message = ["MEETING_STATUS_LOCKED", "Locked status."]
+            break
+        case .unlocked:
+            message = ["MEETING_STATUS_UNLOCKED", "unLocked status."]
+            break
+        case .inWaitingRoom:
+            message = ["MEETING_STATUS_IN_WAITING_ROOM", "inWaitingRoom status."]
+            break
+        case .joinBO:
+            message = ["MEETING_STATUS_JOIN_BO", "joinBO status."]
+            break
+        case .leaveBO:
+            message = ["MEETING_STATUS_LEAVE_BO", "leaveBO status."]
+            break
+        case .waitingExternalSessionKey:
+            message = ["MEETING_STATUS_WAIT_EX_SESION_KEY", "waitingExternalSessionKey status."]
             break
         case .webinarPromote:
             message = ["MEETING_STATUS_WEBINAR_PROMOTE", "Upgrade the attendees to panelist in webinar"]
@@ -462,7 +500,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             message = ["MEETING_STATUS_WEBINAR_DEPROMOTE", "Demote the attendees from the panelist"]
             break
         default:
-            message = ["MEETING_STATUS_UNKNOWN", "Unknown error"]
+            message = ["", ""]
         }
         
         return message
