@@ -152,12 +152,13 @@ public class ZoomView  implements PlatformView,
         opts.no_audio = parseBoolean(options, "noAudio", false);
 
         opts.no_video = false;
-		opts.meeting_views_options = MeetingViewsOptions.NO_TEXT_PASSWORD + MeetingViewsOptions.NO_TEXT_MEETING_ID + MeetingViewsOptions.NO_BUTTON_PARTICIPANTS;
+		opts.meeting_views_options = MeetingViewsOptions.NO_TEXT_PASSWORD + MeetingViewsOptions.NO_TEXT_MEETING_ID + MeetingViewsOptions.NO_BUTTON_PARTICIPANTS + MeetingViewsOptions.NO_BUTTON_SHARE;
         
         MeetingSettingsHelper msHelper = zoomSDK.getMeetingSettingsHelper();
         msHelper.setAutoConnectVoIPWhenJoinMeeting(true);
         msHelper.setMuteMyMicrophoneWhenJoinMeeting(true);
         msHelper.setTurnOffMyVideoWhenJoinMeeting(false);
+        msHelper.disableShowVideoPreviewWhenJoinMeeting(true);
 
         JoinMeetingParams params = new JoinMeetingParams();
 
