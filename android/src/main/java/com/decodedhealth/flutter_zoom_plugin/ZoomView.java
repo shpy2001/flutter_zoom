@@ -7,6 +7,7 @@ import android.widget.TextView;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Locale;
 
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.EventChannel;
@@ -137,6 +138,8 @@ public class ZoomView  implements PlatformView,
             result.success(false);
             return;
         }
+
+        zoomSDK.setSdkLocale(context,new Locale(options.get("langCode")));
 
         final MeetingService meetingService = zoomSDK.getMeetingService();
 

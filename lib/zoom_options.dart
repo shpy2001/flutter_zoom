@@ -1,21 +1,13 @@
-
 class ZoomOptions {
-
   String domain;
   String appKey;
   String appSecret;
   String jwtToken;
 
-  ZoomOptions({
-    this.domain,
-    this.appKey,
-    this.appSecret,
-    this.jwtToken
-  });
+  ZoomOptions({this.domain, this.appKey, this.appSecret, this.jwtToken});
 }
 
 class ZoomMeetingOptions {
-
   String userId;
   String displayName;
   String meetingId;
@@ -28,19 +20,20 @@ class ZoomMeetingOptions {
   String disableShare;
   String noDisconnectAudio;
   String noAudio;
+  String langCode;
 
-  ZoomMeetingOptions({
-    this.userId,
-    this.displayName,
-    this.meetingId,
-    this.meetingPassword,
-    this.zoomToken,
-    this.zoomAccessToken,
-    this.disableDialIn,
-    this.disableDrive,
-    this.disableInvite,
-    this.disableShare,
-    this.noDisconnectAudio,
-    this.noAudio
-  });
+  ZoomMeetingOptions(
+      {this.userId,
+      this.displayName,
+      this.meetingId,
+      this.meetingPassword,
+      this.zoomToken,
+      this.zoomAccessToken,
+      this.disableDialIn,
+      this.disableDrive,
+      this.disableInvite,
+      this.disableShare,
+      this.noDisconnectAudio,
+      this.noAudio,
+      this.langCode = "vi"});
 }

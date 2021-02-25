@@ -256,6 +256,13 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         if meetingService != nil {
             
             let arguments = call.arguments as! Dictionary<String, String?>
+
+            MobileRTC.shared().setLanguage(arguments["langCode"]!!)
+            // let langCode = arguments["langCode"]! != nil;
+            // if langCode {
+            //     MobileRTC.shared().setLanguage(arguments["langCode"]!!)
+            // }
+            
             
             meetingSettings?.disableDriveMode(parseBoolean(data: arguments["disableDrive"]!, defaultValue: false))
             meetingSettings?.disableCall(in: parseBoolean(data: arguments["disableDialIn"]!, defaultValue: false))
@@ -268,18 +275,26 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             meetingSettings?.meetingPasswordHidden = true;
             meetingSettings?.meetingParticipantHidden = true;
             meetingSettings?.setMuteVideoWhenJoinMeeting(false)
+            meetingSettings?.disableShowVideoPreview(whenJoinMeeting:true)
             
             var params = [
                 kMeetingParam_Username: arguments["userId"]!!,
                 kMeetingParam_MeetingNumber: arguments["meetingId"]!!
             ]
             
+            let param = MobileRTCMeetingJoinParam();
+            param.noVideo = false;
+            param.userName = arguments["userId"]!!;
+            param.meetingNumber = arguments["meetingId"]!!
+            
             let hasPassword = arguments["meetingPassword"]! != nil
             if hasPassword {
                 params[kMeetingParam_MeetingPassword] = arguments["meetingPassword"]!!
+                param.password = arguments["meetingPassword"]!!
             }
             
-            let response = meetingService?.joinMeeting(with: params)
+//            let response = meetingService?.joinMeeting(with: params)
+            let response = meetingService?.joinMeeting(with: param)
             
             if let response = response {
                 print("Got response from join: \(response)")
