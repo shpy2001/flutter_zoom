@@ -17,6 +17,7 @@ A new Flutter plugin.
   s.dependency 'Flutter'
 
   s.ios.deployment_target = '10.3'
+  s.static_framework = true
 
   s.xcconfig = { 'OTHER_LDFLAGS' => '-framework MobileRTC' }
   s.preserve_paths = 'MobileRTC.xcframework', 'MobileRTCResources.bundle'
