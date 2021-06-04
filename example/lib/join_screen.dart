@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_zoom_plugin_example/meeting_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -11,7 +9,6 @@ class JoinWidget extends StatefulWidget {
 }
 
 class _JoinWidgetState extends State<JoinWidget> {
-
   TextEditingController meetingIdController = TextEditingController();
   TextEditingController meetingPasswordController = TextEditingController();
 
@@ -53,7 +50,7 @@ class _JoinWidgetState extends State<JoinWidget> {
                 child: Builder(
                   builder: (context) {
                     // The basic Material Design action button.
-                    return RaisedButton(
+                    return ElevatedButton(
                       // If onPressed is null, the button is disabled
                       // this is my goto temporary callback.
                       onPressed: () => joinMeeting(context),
@@ -67,7 +64,7 @@ class _JoinWidgetState extends State<JoinWidget> {
                 child: Builder(
                   builder: (context) {
                     // The basic Material Design action button.
-                    return RaisedButton(
+                    return ElevatedButton(
                       // If onPressed is null, the button is disabled
                       // this is my goto temporary callback.
                       onPressed: () => startMeeting(context),
@@ -83,12 +80,13 @@ class _JoinWidgetState extends State<JoinWidget> {
     );
   }
 
-
   joinMeeting(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return MeetingWidget(meetingId: meetingIdController.text, meetingPassword: meetingPasswordController.text);
+          return MeetingWidget(
+              meetingId: meetingIdController.text,
+              meetingPassword: meetingPasswordController.text);
         },
       ),
     );

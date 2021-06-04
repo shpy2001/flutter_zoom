@@ -9,15 +9,15 @@ typedef void ZoomViewCreatedCallback(ZoomViewController controller);
 
 class ZoomView extends StatefulWidget {
   const ZoomView({
-    Key key,
+    Key? key,
     this.zoomOptions,
     this.meetingOptions,
     this.onViewCreated,
   }) : super(key: key);
 
-  final ZoomViewCreatedCallback onViewCreated;
-  final ZoomOptions zoomOptions;
-  final ZoomMeetingOptions meetingOptions;
+  final ZoomViewCreatedCallback? onViewCreated;
+  final ZoomOptions? zoomOptions;
+  final ZoomMeetingOptions? meetingOptions;
 
   @override
   State<StatefulWidget> createState() => _ZoomViewState();
@@ -48,7 +48,7 @@ class _ZoomViewState extends State<ZoomView> {
     }
 
     var controller = new ZoomViewController._(id);
-    widget.onViewCreated(controller);
+    widget.onViewCreated!(controller);
   }
 }
 
@@ -62,10 +62,8 @@ class ZoomViewController {
   final MethodChannel _methodChannel;
   final EventChannel _zoomStatusEventChannel;
 
-  Future<List> initZoom(ZoomOptions options) async {
-    assert(options != null);
-
-    var optionMap = new Map<String, String>();
+  Future<List?> initZoom(ZoomOptions options) async {
+    var optionMap = new Map<String, String?>();
     optionMap.putIfAbsent("appKey", () => options.appKey);
     optionMap.putIfAbsent("appSecret", () => options.appSecret);
     optionMap.putIfAbsent("domain", () => options.domain);
@@ -73,9 +71,8 @@ class ZoomViewController {
     return _methodChannel.invokeMethod('init', optionMap);
   }
 
-  Future<bool> startMeeting(ZoomMeetingOptions options) async {
-    assert(options != null);
-    var optionMap = new Map<String, String>();
+  Future<bool?> startMeeting(ZoomMeetingOptions options) async {
+    var optionMap = new Map<String, String?>();
     optionMap.putIfAbsent("userId", () => options.userId);
     optionMap.putIfAbsent("displayName", () => options.displayName);
     optionMap.putIfAbsent("meetingId", () => options.meetingId);
@@ -92,9 +89,8 @@ class ZoomViewController {
     return _methodChannel.invokeMethod('start', optionMap);
   }
 
-  Future<bool> joinMeeting(ZoomMeetingOptions options) async {
-    assert(options != null);
-    var optionMap = new Map<String, String>();
+  Future<bool?> joinMeeting(ZoomMeetingOptions options) async {
+    var optionMap = new Map<String, String?>();
     optionMap.putIfAbsent("userId", () => options.userId);
     optionMap.putIfAbsent("meetingId", () => options.meetingId);
     optionMap.putIfAbsent("meetingPassword", () => options.meetingPassword);
@@ -109,16 +105,14 @@ class ZoomViewController {
     return _methodChannel.invokeMethod('join', optionMap);
   }
 
-  Future<List> meetingStatus(String meetingId) async {
-    assert(meetingId != null);
-
+  Future<List?> meetingStatus(String meetingId) async {
     var optionMap = new Map<String, String>();
     optionMap.putIfAbsent("meetingId", () => meetingId);
 
     return _methodChannel.invokeMethod('meeting_status', optionMap);
   }
 
-  Future<List> inMeeting() async {
+  Future<List?> inMeeting() async {
     return _methodChannel.invokeMethod('in_meeting');
   }
 
