@@ -64,6 +64,7 @@ class ZoomViewController {
 
   Future<List?> initZoom(ZoomOptions options) async {
     var optionMap = new Map<String, String?>();
+    optionMap.putIfAbsent("sdkToken", () => options.jwtToken);
     optionMap.putIfAbsent("appKey", () => options.appKey);
     optionMap.putIfAbsent("appSecret", () => options.appSecret);
     optionMap.putIfAbsent("domain", () => options.domain);

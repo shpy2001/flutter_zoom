@@ -90,6 +90,7 @@ public class ZoomView  implements PlatformView,
 
         if(zoomSDK.isInitialized()) {
             List<Integer> response = Arrays.asList(0, 0);
+            System.out.println("ZOOM SDK FLUTTER : had isInitialized !!!!!!!!!!!!!!");
             result.success(response);
             return;
         }
@@ -102,18 +103,19 @@ public class ZoomView  implements PlatformView,
         zoomSDK.initialize(
                 context,
                 new ZoomSDKInitializeListener() {
-
                     @Override
                     public void onZoomAuthIdentityExpired() {
-
+                        System.out.println("ZOOM SDK FLUTTER : expired ");
                     }
 
                     @Override
                     public void onZoomSDKInitializeResult(int errorCode, int internalErrorCode) {
+                        System.out.println("ZOOM SDK FLUTTER : ini finished");
+
                         List<Integer> response = Arrays.asList(errorCode, internalErrorCode);
 
                         if (errorCode != ZoomError.ZOOM_ERROR_SUCCESS) {
-                            System.out.println("Failed to initialize Zoom SDK");
+                            System.out.println("Failed to initialize Zoom SDK --- ErrCode:" + errorCode + "-- inErr: " + internalErrorCode);
                             result.success(response);
                             return;
                         }
