@@ -84,10 +84,7 @@ class MeetingWidget extends StatelessWidget {
                     controller
                         .meetingStatus(this.meetingOptions.meetingId)
                         .then((status) {
-                      print("Meeting Status Polling: " +
-                          status[0] +
-                          " - " +
-                          status[1]);
+                      print('Meeting Status Polling: $status');
                     });
                   });
                 });

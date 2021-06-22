@@ -211,7 +211,15 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         case "meeting_status":
             self.meetingStatus(call: call, result: result)
         case "in_meeting":
-            self.inMeeting()
+            self.inMeeting(call: call, result: result)
+        case "login_with_email":
+            self.loginWithEmail(call: call, result: result)
+        case "login_with_sso":
+            self.loginWithSso(call: call, result: result)
+        case "start_instant_meeting":
+            self.startInstantMeeting(call: call, result: result)
+        case "logout":
+            self.logout( result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -235,6 +243,22 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         auth?.clientSecret = arguments["appSecret"]!
         auth?.jwtToken = arguments["sdkToken"]!
         auth?.sdkAuth()
+    }
+    
+    public func loginWithEmail(call: FlutterMethodCall, result: @escaping FlutterResult)  {
+        result(["ZOOM_LOGIN_SUCCESS", "No status available"])
+    }
+    
+    public func loginWithSso(call: FlutterMethodCall, result: @escaping FlutterResult)  {
+        result(["ZOOM_LOGIN_SUCCESS", "No status available"])
+    }
+    
+    public func startInstantMeeting(call: FlutterMethodCall, result: @escaping FlutterResult)  {
+        result(["ZOOM_START_MEETING_SUCCESS", "Meeting Id", "Meeting pass"])
+    }
+    
+    public func startInstantMeeting(cresult: @escaping FlutterResult)  {
+        result(true)
     }
     
     public func meetingStatus(call: FlutterMethodCall, result: FlutterResult) {
@@ -324,7 +348,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         }
     }
 
-    public func inMeeting(){
+    public func inMeeting(call: FlutterMethodCall, result: @escaping FlutterResult){
         let meetingService = MobileRTC.shared().getMeetingService()
         let userList = meetingService?.getInMeetingUserList()
             if userList != nil {

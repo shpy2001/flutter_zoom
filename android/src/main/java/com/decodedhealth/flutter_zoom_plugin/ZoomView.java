@@ -74,7 +74,19 @@ public class ZoomView  implements PlatformView,
                 meetingStatus(result);
                 break;
             case "in_meeting":
-                inMeeting();
+                inMeeting(methodCall, result);
+                break;
+            case "login_with_email":
+                loginWithEmail(methodCall,result);
+                break;
+            case "login_with_sso":
+                loginWithSso(methodCall,result);
+                break;
+            case "start_instant_meeting":
+                startInstantMeeting(methodCall,result);
+                break;
+            case "logout":
+                logout(result);
                 break;
             default:
                 result.notImplemented();
@@ -172,7 +184,7 @@ public class ZoomView  implements PlatformView,
         result.success(true);
     }
 
-    private void inMeeting(){
+    private void inMeeting(MethodCall methodCall, MethodChannel.Result result){
         InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
         InMeetingAudioController mInMeetingAudioController = mInMeetingService.getInMeetingAudioController();
         mInMeetingAudioController.connectAudioWithVoIP();
@@ -250,6 +262,22 @@ public class ZoomView  implements PlatformView,
 
         MeetingStatus status = meetingService.getMeetingStatus();
         result.success(status != null ? Arrays.asList(status.name(), "") :  Arrays.asList("MEETING_STATUS_UNKNOWN", "No status available"));
+    }
+
+    private void loginWithEmail(MethodCall methodCall, MethodChannel.Result result) {
+        result.success(Arrays.asList("ZOOM_LOGIN_SUCCESS", "No status available"));
+    }
+    
+    private void loginWithSso(MethodCall methodCall, MethodChannel.Result result) {
+        result.success(Arrays.asList("ZOOM_LOGIN_SUCCESS", "No status available"));
+    }
+    
+    private void startInstantMeeting(MethodCall methodCall, MethodChannel.Result result) {
+        result.success(Arrays.asList("ZOOM_START_MEETING_SUCCESS", "Meeting Id", "Meeting pass"));
+    }
+   
+    private void logout(MethodChannel.Result result) {
+        result.success(true);
     }
 
     @Override
