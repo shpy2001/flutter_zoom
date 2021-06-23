@@ -23,9 +23,9 @@ class MeetingWidget extends StatelessWidget {
       noAudio: "false",
       noDisconnectAudio: "false");
 
-  Timer timer;
+  late Timer timer;
 
-  MeetingWidget({Key key, meetingId, meetingPassword}) : super(key: key) {
+  MeetingWidget({meetingId, meetingPassword}) {
     // this.zoomOptions = new ZoomOptions(
     //   domain: "zoom.us",
     //   appKey: "appKey",
@@ -63,7 +63,7 @@ class MeetingWidget extends StatelessWidget {
               print("initialised");
               print(results);
 
-              if (results[0] == 0) {
+              if (results == ZoomApiError.ZOOM_API_ERROR_SUCCESS) {
                 controller.zoomStatusEvents.listen((status) {
                   print("Meeting Status Stream: " +
                       status[0] +
@@ -71,7 +71,7 @@ class MeetingWidget extends StatelessWidget {
                       status[1]);
                   if (_isMeetingEnded(status[0])) {
                     Navigator.pop(context);
-                    timer?.cancel();
+                    timer.cancel();
                   }
                 });
 
@@ -82,7 +82,7 @@ class MeetingWidget extends StatelessWidget {
                     .then((joinMeetingResult) {
                   timer = Timer.periodic(new Duration(seconds: 2), (timer) {
                     controller
-                        .meetingStatus(this.meetingOptions.meetingId)
+                        .meetingStatus(this.meetingOptions.meetingId!)
                         .then((status) {
                       print('Meeting Status Polling: $status');
                     });

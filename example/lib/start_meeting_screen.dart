@@ -7,12 +7,12 @@ import 'package:flutter_zoom_plugin/zoom_options.dart';
 import 'package:flutter/material.dart';
 
 class StartMeetingWidget extends StatelessWidget {
-  ZoomOptions zoomOptions;
-  ZoomMeetingOptions meetingOptions;
+  late ZoomOptions zoomOptions;
+  late ZoomMeetingOptions meetingOptions;
 
-  Timer timer;
+  late Timer timer;
 
-  StartMeetingWidget({Key key, meetingId}) : super(key: key) {
+  StartMeetingWidget({meetingId}) {
     this.zoomOptions = new ZoomOptions(
       domain: "zoom.us",
       appKey: "appKey",
@@ -60,7 +60,7 @@ class StartMeetingWidget extends StatelessWidget {
               print("initialised");
               print(results);
 
-              if (results[0] == 0) {
+              if (results == ZoomApiError.ZOOM_API_ERROR_SUCCESS) {
                 controller.zoomStatusEvents.listen((status) {
                   print("Meeting Status Stream: " +
                       status[0] +
@@ -70,7 +70,7 @@ class StartMeetingWidget extends StatelessWidget {
                       ZoomMeetingStatus.values,
                       ZoomMeetingStatus.MEETING_STATUS_UNKNOWN))) {
                     Navigator.pop(context);
-                    timer?.cancel();
+                    timer.cancel();
                   }
                 });
 
@@ -81,7 +81,7 @@ class StartMeetingWidget extends StatelessWidget {
                     .then((joinMeetingResult) {
                   timer = Timer.periodic(new Duration(seconds: 2), (timer) {
                     controller
-                        .meetingStatus(this.meetingOptions.meetingId)
+                        .meetingStatus(this.meetingOptions.meetingId!)
                         .then((status) {
                       print("Meeting Status Polling: $status");
                     });

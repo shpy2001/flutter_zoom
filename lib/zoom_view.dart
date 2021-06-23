@@ -7,30 +7,10 @@ import 'package:flutter_zoom_plugin/zoom_options.dart';
 
 typedef void ZoomViewCreatedCallback(ZoomViewController controller);
 
-enum ZoomMeetingStatus {
-  MEETING_STATUS_CONNECTING,
-  MEETING_STATUS_DISCONNECTING,
-  MEETING_STATUS_FAILED,
-  MEETING_STATUS_IDLE,
-  MEETING_STATUS_IN_WAITING_ROOM,
-  MEETING_STATUS_INMEETING,
-  MEETING_STATUS_RECONNECTING,
-  MEETING_STATUS_UNKNOWN,
-  MEETING_STATUS_WAITINGFORHOST,
-  MEETING_STATUS_WEBINAR_DEPROMOTE,
-  MEETING_STATUS_WEBINAR_PROMOTE,
-  //ios only below
-  MEETING_STATUS_ENDED,
-  MEETING_STATUS_LOCKED,
-  MEETING_STATUS_UNLOCKED,
-  MEETING_STATUS_JOIN_BO,
-  MEETING_STATUS_LEAVE_BO,
-  MEETING_STATUS_WAIT_EX_SESION_KEY,
-}
-
 extension StringExtension on String {
   T toEnum<T>(List<T> list, T defaultEnum) =>
-      list.firstWhere((d) => d.toString() == this, orElse: () => defaultEnum);
+      list.firstWhere((d) => d.toString().split('.')[1] == this,
+          orElse: () => defaultEnum);
 }
 
 class ZoomView extends StatefulWidget {
@@ -88,47 +68,41 @@ class ZoomViewController {
   final MethodChannel _methodChannel;
   final EventChannel _zoomStatusEventChannel;
 
-  Future<List?> initZoom(ZoomOptions options) async {
+  Future<ZoomApiError> initZoom(ZoomOptions options) async {
     var optionMap = new Map<String, String?>();
     optionMap.putIfAbsent("sdkToken", () => options.jwtToken);
     optionMap.putIfAbsent("appKey", () => options.appKey);
     optionMap.putIfAbsent("appSecret", () => options.appSecret);
     optionMap.putIfAbsent("domain", () => options.domain);
 
-    return _methodChannel.invokeMethod('init', optionMap);
+    var ret = await _methodChannel.invokeMethod('init', optionMap);
+    return zoomApiErrorFromInt[ret[0]] ?? ZoomApiError.ZOOM_API_INVALID_STATUS;
   }
 
-  Future<List?> loginWithEmail(String email, String password) async {
+  Future<ZoomApiError> loginWithEmail(String email, String password) async {
     var optionMap = new Map<String, String?>();
     optionMap.putIfAbsent("email", () => email);
     optionMap.putIfAbsent("password", () => password);
-    return _methodChannel.invokeMethod('login_with_email', optionMap);
+    var ret = await _methodChannel.invokeMethod('login_with_email', optionMap);
+    return zoomApiErrorFromInt[ret] ?? ZoomApiError.ZOOM_API_INVALID_STATUS;
   }
 
   Future<List?> loginWithSso(String sso) async {
-    return _methodChannel.invokeMethod('login_with_sso', sso);
+    var optionMap = new Map<String, String?>();
+    optionMap.putIfAbsent("token", () => sso);
+    return _methodChannel.invokeMethod('login_with_sso', optionMap);
   }
 
   Future<bool?> logout() async {
     return _methodChannel.invokeMethod('logout');
   }
 
-  Future<List?> startInstantMeeting(ZoomMeetingOptions options) async {
-    var optionMap = new Map<String, String?>();
-    optionMap.putIfAbsent("userId", () => options.userId);
-    optionMap.putIfAbsent("displayName", () => options.displayName);
-    optionMap.putIfAbsent("meetingId", () => options.meetingId);
-    optionMap.putIfAbsent("meetingPassword", () => options.meetingPassword);
-    optionMap.putIfAbsent("zoomToken", () => options.zoomToken);
-    optionMap.putIfAbsent("zoomAccessToken", () => options.zoomAccessToken);
-    optionMap.putIfAbsent("disableDialIn", () => options.disableDialIn);
-    optionMap.putIfAbsent("disableDrive", () => options.disableDrive);
-    optionMap.putIfAbsent("disableInvite", () => options.disableInvite);
-    optionMap.putIfAbsent("disableShare", () => options.disableShare);
-    optionMap.putIfAbsent("noDisconnectAudio", () => options.noDisconnectAudio);
-    optionMap.putIfAbsent("noAudio", () => options.noAudio);
-
-    return _methodChannel.invokeMethod('start_instant_meeting', optionMap);
+  Future<ZoomMeetingError> startInstantMeeting(
+      ZoomMeetingOptionAll options) async {
+    var ret = await _methodChannel.invokeMethod(
+        'start_instant_meeting', options.toOptionMap());
+    return zoomMeetingErrorFromInt[ret] ??
+        ZoomMeetingError.MEETING_ERROR_UNKNOWN;
   }
 
   Future<bool?> startMeeting(ZoomMeetingOptions options) async {
@@ -175,6 +149,10 @@ class ZoomViewController {
             ZoomMeetingStatus.values, ZoomMeetingStatus.MEETING_STATUS_UNKNOWN);
   }
 
+  Future<List?> getMeetingPassword() async {
+    return _methodChannel.invokeMethod('get_meeting_password');
+  }
+
   Future<List?> inMeeting() async {
     return _methodChannel.invokeMethod('in_meeting');
   }
@@ -182,4 +160,44 @@ class ZoomViewController {
   Stream<dynamic> get zoomStatusEvents {
     return _zoomStatusEventChannel.receiveBroadcastStream();
   }
+
+  static Map<int, ZoomApiError> zoomApiErrorFromInt = {
+    9: ZoomApiError.ZOOM_API_ERROR_EMAIL_LOGIN_IS_DISABLED,
+    8: ZoomApiError.ZOOM_API_ERROR_FAILED_CLIENT_INCOMPATIBLE,
+    1: ZoomApiError.ZOOM_API_ERROR_FAILED_NULLPOINTER,
+    6: ZoomApiError.ZOOM_API_ERROR_FAILED_WRONGPARAMETERS,
+    0: ZoomApiError.ZOOM_API_ERROR_SUCCESS,
+    101: ZoomApiError.ZOOM_API_INVALID_STATUS
+  };
+
+  static Map<int, ZoomMeetingError> zoomMeetingErrorFromInt = {
+    4: ZoomMeetingError.MEETING_ERROR_CLIENT_INCOMPATIBLE,
+    17: ZoomMeetingError.MEETING_ERROR_DISALLOW_HOST_RESGISTER_WEBINAR,
+    18: ZoomMeetingError.MEETING_ERROR_DISALLOW_PANELIST_REGISTER_WEBINAR,
+    21: ZoomMeetingError.MEETING_ERROR_EXIT_WHEN_WAITING_HOST_START,
+    19: ZoomMeetingError.MEETING_ERROR_HOST_DENY_EMAIL_REGISTER_WEBINAR,
+    1: ZoomMeetingError.MEETING_ERROR_INCORRECT_MEETING_NUMBER,
+    99: ZoomMeetingError.MEETING_ERROR_INVALID_ARGUMENTS,
+    101: ZoomMeetingError.MEETING_ERROR_INVALID_STATUS,
+    12: ZoomMeetingError.MEETING_ERROR_LOCKED,
+    9: ZoomMeetingError.MEETING_ERROR_MEETING_NOT_EXIST,
+    8: ZoomMeetingError.MEETING_ERROR_MEETING_OVER,
+    6: ZoomMeetingError.MEETING_ERROR_MMR_ERROR,
+    5: ZoomMeetingError.MEETING_ERROR_NETWORK_ERROR,
+    3: ZoomMeetingError.MEETING_ERROR_NETWORK_UNAVAILABLE,
+    11: ZoomMeetingError.MEETING_ERROR_NO_MMR,
+    16: ZoomMeetingError.MEETING_ERROR_REGISTER_WEBINAR_FULL,
+    22: ZoomMeetingError.MEETING_ERROR_REMOVED_BY_HOST,
+    13: ZoomMeetingError.MEETING_ERROR_RESTRICTED,
+    14: ZoomMeetingError.MEETING_ERROR_RESTRICTED_JBH,
+    7: ZoomMeetingError.MEETING_ERROR_SESSION_ERROR,
+    0: ZoomMeetingError.MEETING_ERROR_SUCCESS,
+    2: ZoomMeetingError.MEETING_ERROR_TIMEOUT,
+    100: ZoomMeetingError.MEETING_ERROR_UNKNOWN,
+    10: ZoomMeetingError.MEETING_ERROR_USER_FULL,
+    15: ZoomMeetingError.MEETING_ERROR_WEB_SERVICE_FAILED,
+    20: ZoomMeetingError.MEETING_ERROR_WEBINAR_ENFORCE_LOGIN,
+    999: ZoomMeetingError.MEETING_ERROR_HOST_NOT_LOGIN,
+    998: ZoomMeetingError.MEETING_ERROR_SDK_NOT_INIT
+  };
 }

@@ -219,7 +219,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         case "start_instant_meeting":
             self.startInstantMeeting(call: call, result: result)
         case "logout":
-            self.logout( result: result)
+            self.logout(result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -246,18 +246,52 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
     }
     
     public func loginWithEmail(call: FlutterMethodCall, result: @escaping FlutterResult)  {
-        result(["ZOOM_LOGIN_SUCCESS", "No status available"])
+        let auth = MobileRTC.shared().getAuthService()
+        let arguments = call.arguments as! Dictionary<String, String>
+
+        if auth != nil {
+            if auth?.isLoggedIn() {
+                result(0)
+            }
+            else if auth?.login(withEmail: arguments["email"]!, password: arguments["password"]!, rememberMe: false) {
+                result(0)
+            }else{
+                result(6)
+            }
+        }else{
+            result(6)
+        }
     }
     
     public func loginWithSso(call: FlutterMethodCall, result: @escaping FlutterResult)  {
-        result(["ZOOM_LOGIN_SUCCESS", "No status available"])
+        let auth = MobileRTC.shared().getAuthService()
+        let arguments = call.arguments as! Dictionary<String, String>
+
+        if auth != nil {
+            if auth?.isLoggedIn() {
+                result(0)
+            }
+            else if auth?.login(withSSOToken: arguments["token"]!, rememberMe: false) {
+                result(0)
+            }else{
+                result(6)
+            }
+        }else{
+            result(6)
+        }
     }
     
     public func startInstantMeeting(call: FlutterMethodCall, result: @escaping FlutterResult)  {
         result(["ZOOM_START_MEETING_SUCCESS", "Meeting Id", "Meeting pass"])
     }
     
-    public func startInstantMeeting(cresult: @escaping FlutterResult)  {
+    public func logout(cresult: @escaping FlutterResult)  {
+        let auth = MobileRTC.shared().getAuthService()
+        if auth != nil {
+            if auth?.isLoggedIn() {
+                auth?.logoutRTC()
+            }
+        }
         result(true)
     }
     
