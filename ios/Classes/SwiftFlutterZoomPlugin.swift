@@ -238,7 +238,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         context.enableLog = true
         context.bundleResPath = pluginBundlePath
         MobileRTC.shared().initialize(context)
-        MobileRTC.shared().setLanguage(arguments["langCode"]!!)
+        // MobileRTC.shared().setLanguage(arguments["langCode"]!)
         
         let auth = MobileRTC.shared().getAuthService()
         auth?.delegate = self.authenticationDelegate.onAuth(result)
@@ -253,10 +253,10 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         let arguments = call.arguments as! Dictionary<String, String>
 
         if auth != nil {
-            if auth?.isLoggedIn() {
+            if auth!.isLoggedIn() {
                 result(0)
             }
-            else if auth?.login(withEmail: arguments["email"]!, password: arguments["password"]!, rememberMe: false) {
+            else if auth!.login(withEmail: arguments["email"]!, password: arguments["password"]!, rememberMe: false) {
                 result(0)
             }else{
                 result(6)
@@ -271,10 +271,10 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         let arguments = call.arguments as! Dictionary<String, String>
 
         if auth != nil {
-            if auth?.isLoggedIn() {
+            if auth!.isLoggedIn() {
                 result(0)
             }
-            else if auth?.login(withSSOToken: arguments["token"]!, rememberMe: false) {
+            else if auth!.login(withSSOToken: arguments["token"]!, rememberMe: false) {
                 result(0)
             }else{
                 result(6)
@@ -286,10 +286,10 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
     
     
     
-    public func logout(cresult: @escaping FlutterResult)  {
+    public func logout(result: @escaping FlutterResult)  {
         let auth = MobileRTC.shared().getAuthService()
         if auth != nil {
-            if auth?.isLoggedIn() {
+            if auth!.isLoggedIn() {
                 auth?.logoutRTC()
             }
         }
@@ -406,10 +406,10 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         }
 
         if arguments["allowParticipantsToRename"]!! != "-1" {
-            meetingService?.allowParticipantsToRename(parseBoolean(data: arguments["allowParticipantsToRename"]!, defaultValue: false))
+            meetingService?.allowParticipants(toRename :parseBoolean(data: arguments["allowParticipantsToRename"]!, defaultValue: false))
         }
         if arguments["allowParticipantsToUnmuteSelf"]!! != "-1" {
-            meetingService?.allowParticipantsToUnmuteSelf(parseBoolean(data: arguments["allowParticipantsToUnmuteSelf"]!, defaultValue: false))
+            meetingService?.allowParticipants(toUnmuteSelf : parseBoolean(data: arguments["allowParticipantsToUnmuteSelf"]!, defaultValue: false))
         }
     }
 
@@ -427,7 +427,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             //opts.no_chat_msg_toast = parseBoolean(options, "noChatMsgToast", false);
 
             //opts.no_dial_in_via_phone = parseBoolean(options, "noDialInViaPhone", false);
-            meetingSettings?.disableCallIn(parseBoolean(data: arguments["noDialInViaPhone"]!, defaultValue: true)) 
+            meetingSettings?.disableCall(in : parseBoolean(data: arguments["noDialInViaPhone"]!, defaultValue: true)) 
             //opts.no_dial_out_to_phone = parseBoolean(options, "noDialOutToPhone", false); 
             meetingSettings?.disableCallOut(parseBoolean(data: arguments["noDialOutToPhone"]!, defaultValue: true))
 
@@ -438,10 +438,10 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             meetingSettings?.disableDriveMode(parseBoolean(data: arguments["noDrivingMode"]!, defaultValue: false))
 
             //opts.no_invite = parseBoolean(options, "noInvite", false); 
-            meetingSettings>.meetingInviteHidden = parseBoolean(data: arguments["noInvite"]!, defaultValue: true)
+            meetingSettings?.meetingInviteHidden = parseBoolean(data: arguments["noInvite"]!, defaultValue: true)
 
-            opts.no_meeting_end_message = parseBoolean(options, "noMeetingEndMessage", false); 
-            opts.no_meeting_error_message = parseBoolean(options, "noMeetingErrorMessage", false); 
+            //opts.no_meeting_end_message = parseBoolean(options, "noMeetingEndMessage", false); 
+            //opts.no_meeting_error_message = parseBoolean(options, "noMeetingErrorMessage", false); 
 
             //opts.no_share = parseBoolean(options, "noShare", false); 
             meetingSettings?.meetingShareHidden = parseBoolean(data: arguments["noShare"]!, defaultValue: false)
@@ -449,13 +449,13 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             //opts.no_titlebar = parseBoolean(options, "noTitlebar", false); 
             meetingSettings?.meetingTitleHidden = parseBoolean(data: arguments["noTitlebar"]!, defaultValue: false)
             
-            opts.no_unmute_confirm_dialog = parseBoolean(options, "noUnmuteConfirmDialog", false); 
+            //opts.no_unmute_confirm_dialog = parseBoolean(options, "noUnmuteConfirmDialog", false); 
 
             //opts.no_video = parseBoolean(options, "noVideo", false); 
             meetingSettings?.setMuteVideoWhenJoinMeeting(parseBoolean(data: arguments["noVideo"]!, defaultValue: false))
 
-            opts.no_webinar_register_dialog = parseBoolean(options, "noWebinarRegisterDialog", false); 
-            opts.participant_id = options.get("participantId"); 
+            //opts.no_webinar_register_dialog = parseBoolean(options, "noWebinarRegisterDialog", false); 
+            //opts.participant_id = options.get("participantId"); 
 
             //opts.no_audio = parseBoolean(options, "noAudio", false); 
             meetingSettings?.setMuteAudioWhenJoinMeeting(parseBoolean(data: arguments["noAudio"]!, defaultValue: false))
@@ -490,7 +490,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             meetingSettings?.disableShowVideoPreview(whenJoinMeeting:true)
 
             //   opts.custom_meeting_id = options.get("customMeetingId");
-            meetingService?.customizeMeetingTitle(["customMeetingId"])
+            meetingService?.customizeMeetingTitle(arguments["customMeetingId"]!)
 
             let user: MobileRTCMeetingStartParam4LoginlUser = MobileRTCMeetingStartParam4LoginlUser.init()
             let param: MobileRTCMeetingStartParam = user
@@ -643,9 +643,9 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         case .meetingOver:
             code = 8
             break
-        case .mMRError:
-            code = 6
-            break
+        // case .mMRError:
+        //     code = 6
+        //     break
         case .networkError:
             code = 5
             break
