@@ -74,6 +74,7 @@ class ZoomViewController {
     optionMap.putIfAbsent("appKey", () => options.appKey);
     optionMap.putIfAbsent("appSecret", () => options.appSecret);
     optionMap.putIfAbsent("domain", () => options.domain);
+    optionMap.putIfAbsent("langCode", () => options.langCode);
 
     var ret = await _methodChannel.invokeMethod('init', optionMap);
     return zoomApiErrorFromInt[ret[0]] ?? ZoomApiError.ZOOM_API_INVALID_STATUS;
@@ -101,6 +102,7 @@ class ZoomViewController {
       ZoomMeetingOptionAll options) async {
     var ret = await _methodChannel.invokeMethod(
         'start_instant_meeting', options.toOptionMap());
+    print('SFLINK SDK FLUTTER: startInstantMeeting $ret');
     return zoomMeetingErrorFromInt[ret] ??
         ZoomMeetingError.MEETING_ERROR_UNKNOWN;
   }
@@ -155,6 +157,10 @@ class ZoomViewController {
 
   Future<List?> inMeeting() async {
     return _methodChannel.invokeMethod('in_meeting');
+  }
+
+  void inMeetingConfig(ZoomInMeetingConfig options) {
+    _methodChannel.invokeMethod('in_meeting_config', options.toOptionMap());
   }
 
   Stream<dynamic> get zoomStatusEvents {

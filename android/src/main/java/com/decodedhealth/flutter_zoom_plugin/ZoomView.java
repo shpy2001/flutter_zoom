@@ -76,6 +76,9 @@ public class ZoomView  implements PlatformView,
             case "in_meeting":
                 inMeeting(methodCall, result);
                 break;
+            case "in_meeting_config":
+                inMeetingConfig(methodCall);
+                break;
             case "login_with_email":
                 loginWithEmail(methodCall,result);
                 break;
@@ -110,11 +113,14 @@ public class ZoomView  implements PlatformView,
             return;
         }
 
+
         ZoomSDKInitParams initParams = new ZoomSDKInitParams();
         initParams.jwtToken = options.get("sdkToken");
         initParams.appKey = options.get("appKey");
         initParams.appSecret = options.get("appSecret");
         initParams.domain = options.get("domain");
+
+        final String langCode = options.get("langCode");
         zoomSDK.initialize(
                 context,
                 new ZoomSDKInitializeListener() {
@@ -136,6 +142,8 @@ public class ZoomView  implements PlatformView,
                         }
 
                         ZoomSDK zoomSDK = ZoomSDK.getInstance();
+                        zoomSDK.setSdkLocale(context,new Locale(langCode));
+
                         MeetingService meetingService = zoomSDK.getMeetingService();
                         meetingStatusChannel.setStreamHandler(new StatusStreamHandler(meetingService));
                         result.success(response);
@@ -204,11 +212,23 @@ public class ZoomView  implements PlatformView,
             }
         }
     }
+
+    private void inMeetingConfig(MethodCall methodCall){
+        InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
+        Map<String, String> options = methodCall.arguments();
+        if(options.get("setMeetingTopic") != "-1"){
+            System.out.println(mInMeetingService.setMeetingTopic(options.get("setMeetingTopic")));
+        }
+        if(options.get("allowParticipantsToRename") != "-1"){
+            System.out.println(mInMeetingService.allowParticipantsToRename(Boolean.parseBoolean(options.get("allowParticipantsToRename"))));
+        }
+        if(options.get("allowParticipantsToUnmuteSelf") != "-1"){
+            System.out.println(mInMeetingService.allowParticipantsToUnmuteSelf(Boolean.parseBoolean(options.get("allowParticipantsToUnmuteSelf"))));
+        }
+    }
     
     private void getMeetingPassword(MethodChannel.Result result){
         InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
-        System.out.println(mInMeetingService.getCurrentMeetingNumber());
-        System.out.println(mInMeetingService.getMeetingPassword());
         result.success(Arrays.asList(String.valueOf(mInMeetingService.getCurrentMeetingNumber()),mInMeetingService.getMeetingPassword()));
     }
 

@@ -3,8 +3,14 @@ class ZoomOptions {
   String? appKey;
   String? appSecret;
   String? jwtToken;
+  final String langCode;
 
-  ZoomOptions({this.domain, this.appKey, this.appSecret, this.jwtToken});
+  ZoomOptions(
+      {this.domain,
+      this.appKey,
+      this.appSecret,
+      this.jwtToken,
+      this.langCode = "vi"});
 }
 
 class ZoomMeetingOptions {
@@ -208,6 +214,22 @@ class ZoomMeetingOptionAll {
         'inviteViaEmail': inviteViaEmail.toString(),
         'inviteViaSms': inviteViaSms.toString(),
         'langCode': langCode.toString(),
+      };
+}
+
+class ZoomInMeetingConfig {
+  final String? setMeetingTopic;
+  final String? allowParticipantsToRename;
+  final String? allowParticipantsToUnmuteSelf;
+  ZoomInMeetingConfig(
+      {this.setMeetingTopic,
+      this.allowParticipantsToRename,
+      this.allowParticipantsToUnmuteSelf});
+
+  Map<String, String> toOptionMap() => {
+        'setMeetingTopic': setMeetingTopic ?? '-1',
+        'allowParticipantsToRename': allowParticipantsToRename ?? '-1',
+        'allowParticipantsToUnmuteSelf': allowParticipantsToUnmuteSelf ?? '-1',
       };
 }
 
