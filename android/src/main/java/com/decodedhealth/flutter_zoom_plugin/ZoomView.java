@@ -225,6 +225,16 @@ public class ZoomView  implements PlatformView,
         if(options.get("allowParticipantsToUnmuteSelf") != "-1"){
             System.out.println(mInMeetingService.allowParticipantsToUnmuteSelf(Boolean.parseBoolean(options.get("allowParticipantsToUnmuteSelf"))));
         }
+        if(options.get("muteMyAudio") != "-1"){
+            InMeetingAudioController mInMeetingAudioController = mInMeetingService.getInMeetingAudioController();
+            System.out.println(mInMeetingAudioController.muteMyAudio(Boolean.parseBoolean(options.get("muteMyAudio"))));
+        }
+        if(options.get("muteMyVideo") != "-1"){
+            InMeetingVideoController mInMeetingVideoController = mInMeetingService.getInMeetingVideoController();
+            System.out.println(mInMeetingVideoController.muteMyVideo(Boolean.parseBoolean(options.get("muteMyVideo"))));
+        }
+
+
     }
     
     private void getMeetingPassword(MethodChannel.Result result){

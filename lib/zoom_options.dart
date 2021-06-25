@@ -221,15 +221,21 @@ class ZoomInMeetingConfig {
   final String? setMeetingTopic;
   final String? allowParticipantsToRename;
   final String? allowParticipantsToUnmuteSelf;
+  final String? muteMyAudio;
+  final String? muteMyVideo;
   ZoomInMeetingConfig(
       {this.setMeetingTopic,
       this.allowParticipantsToRename,
-      this.allowParticipantsToUnmuteSelf});
+      this.allowParticipantsToUnmuteSelf,
+      this.muteMyAudio,
+      this.muteMyVideo});
 
   Map<String, String> toOptionMap() => {
         'setMeetingTopic': setMeetingTopic ?? '-1',
         'allowParticipantsToRename': allowParticipantsToRename ?? '-1',
         'allowParticipantsToUnmuteSelf': allowParticipantsToUnmuteSelf ?? '-1',
+        'muteMyAudio': muteMyAudio ?? '-1',
+        'muteMyVideo': muteMyVideo ?? '-1',
       };
 }
 

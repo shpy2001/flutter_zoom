@@ -419,6 +419,12 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         if arguments["allowParticipantsToUnmuteSelf"]!! != "-1" {
             meetingService?.allowParticipants(toUnmuteSelf : parseBoolean(data: arguments["allowParticipantsToUnmuteSelf"]!, defaultValue: false))
         }
+        if arguments["muteMyAudio"]!! != "-1" {
+            meetingService?.muteMyAudio(parseBoolean(data: arguments["muteMyAudio"]!, defaultValue: false))
+        }
+        if arguments["muteMyVideo"]!! != "-1" {
+            meetingService?.muteMyVideo(parseBoolean(data: arguments["muteMyVideo"]!, defaultValue: false))
+        }
     }
 
     public func startInstantMeeting(call: FlutterMethodCall, result: @escaping FlutterResult)  {
