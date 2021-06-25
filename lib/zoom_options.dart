@@ -6,10 +6,10 @@ class ZoomOptions {
   final String langCode;
 
   ZoomOptions(
-      {this.domain,
-      this.appKey,
-      this.appSecret,
-      this.jwtToken,
+      {this.domain = "zoom.us",
+      this.appKey = "",
+      this.appSecret = "",
+      this.jwtToken = "",
       this.langCode = "vi"});
 }
 

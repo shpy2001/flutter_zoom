@@ -222,6 +222,8 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             self.startInstantMeeting(call: call, result: result)
         case "logout":
             self.logout(result: result)
+        case "get_meeting_password":
+            self.getMeetingPassword(result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -238,7 +240,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         context.enableLog = true
         context.bundleResPath = pluginBundlePath
         MobileRTC.shared().initialize(context)
-        // MobileRTC.shared().setLanguage(arguments["langCode"]!)
+        MobileRTC.shared().setLanguage(arguments["langCode"]!)
         
         let auth = MobileRTC.shared().getAuthService()
         auth?.delegate = self.authenticationDelegate.onAuth(result)
@@ -294,6 +296,12 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             }
         }
         result(true)
+    }
+    
+    public func getMeetingPassword(result: @escaping FlutterResult)  {
+        let meetingInviteHelper = MobileRTCInviteHelper.sharedInstance()
+        result([meetingInviteHelper.ongoingMeetingNumber , meetingInviteHelper.rawMeetingPassword ])
+       
     }
     
     public func meetingStatus(call: FlutterMethodCall, result: FlutterResult) {

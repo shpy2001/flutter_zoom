@@ -313,9 +313,9 @@ public class ZoomView  implements PlatformView,
         InMeetingService mInMeetingService = zoomSDK.getInMeetingService();
         System.out.println("SFLINK SDK FLUTTER: get meetingID" );
 
-        System.out.println(mInMeetingService.getCurrentMeetingNumber());
+        // System.out.println(mInMeetingService.getCurrentMeetingNumber());
 
-        System.out.println(mInMeetingService.getMeetingPassword());
+        // System.out.println(mInMeetingService.getMeetingPassword());
         result.success(ret);
     }
    
