@@ -224,6 +224,8 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             self.logout(result: result)
         case "get_meeting_password":
             self.getMeetingPassword(result: result)
+        case "get_logged_account_info":
+            self.getLoggedAccountInfo(result: sresult);
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -301,7 +303,14 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
     public func getMeetingPassword(result: @escaping FlutterResult)  {
         let meetingInviteHelper = MobileRTCInviteHelper.sharedInstance()
         result([meetingInviteHelper.ongoingMeetingNumber , meetingInviteHelper.rawMeetingPassword ])
-       
+    }
+    public func getLoggedAccountInfo(result: @escaping FlutterResult)  {
+        let accountInfo = MobileRTC.shared().getAuthService().getAccountInfo()
+        if accountInfo == nil {
+            result(["",""])
+            return
+        }
+        result([accountInfo.getEmailAddress() , accountInfo.getUserName() ])
     }
     
     public func meetingStatus(call: FlutterMethodCall, result: FlutterResult) {

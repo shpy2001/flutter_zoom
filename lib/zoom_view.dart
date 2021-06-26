@@ -80,7 +80,10 @@ class ZoomViewController {
     return zoomApiErrorFromInt[ret[0]] ?? ZoomApiError.ZOOM_API_INVALID_STATUS;
   }
 
-  Future<ZoomApiError> loginWithEmail(String email, String password) async {
+  Future<ZoomApiError> loginWithEmail(String email, String password,
+      {bool shouldLogout = true}) async {
+    if (shouldLogout) await logout();
+
     var optionMap = new Map<String, String?>();
     optionMap.putIfAbsent("email", () => email);
     optionMap.putIfAbsent("password", () => password);
@@ -88,10 +91,16 @@ class ZoomViewController {
     return zoomApiErrorFromInt[ret] ?? ZoomApiError.ZOOM_API_INVALID_STATUS;
   }
 
-  Future<List?> loginWithSso(String sso) async {
+  Future<List?> loginWithSso(String sso, {bool shouldLogout = true}) async {
+    if (shouldLogout) await logout();
     var optionMap = new Map<String, String?>();
     optionMap.putIfAbsent("token", () => sso);
     return _methodChannel.invokeMethod('login_with_sso', optionMap);
+  }
+
+  Future<ZoomAccountInfo> getLoggedAccountInfo() async {
+    var retList = await _methodChannel.invokeMethod('get_logged_account_info');
+    return ZoomAccountInfo(email: retList![0], name: retList![1]);
   }
 
   Future<bool?> logout() async {

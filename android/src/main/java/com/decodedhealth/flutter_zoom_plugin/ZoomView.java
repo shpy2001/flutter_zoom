@@ -19,6 +19,7 @@ import us.zoom.sdk.JoinMeetingParams;
 import us.zoom.sdk.StartMeetingParamsWithoutLogin;
 import us.zoom.sdk.StartMeetingOptions;
 import us.zoom.sdk.MeetingService;
+import us.zoom.sdk.AccountService;
 import us.zoom.sdk.MeetingStatus;
 import us.zoom.sdk.ZoomError;
 import us.zoom.sdk.ZoomSDK;
@@ -93,6 +94,9 @@ public class ZoomView  implements PlatformView,
                 break;
             case "get_meeting_password":
                 getMeetingPassword(result);
+                break;
+            case "get_logged_account_info":
+                getLoggedAccountInfo(result);
                 break;
             default:
                 result.notImplemented();
@@ -240,6 +244,15 @@ public class ZoomView  implements PlatformView,
     private void getMeetingPassword(MethodChannel.Result result){
         InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
         result.success(Arrays.asList(String.valueOf(mInMeetingService.getCurrentMeetingNumber()),mInMeetingService.getMeetingPassword()));
+    }
+
+    private void getLoggedAccountInfo(MethodChannel.Result result){
+        AccountService mAccountService = ZoomSDK.getInstance().getAccountService();
+        if (mAccountService == null) {
+            result.success(Arrays.asList("",""));
+            return;
+        }
+        result.success(Arrays.asList(String.valueOf(mAccountService.getAccountEmail()),mAccountService.getAccountName()));
     }
 
     private void startMeeting(MethodCall methodCall, MethodChannel.Result result) {

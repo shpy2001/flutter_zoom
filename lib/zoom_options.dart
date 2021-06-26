@@ -13,6 +13,15 @@ class ZoomOptions {
       this.langCode = "vi"});
 }
 
+class ZoomAccountInfo {
+  String email;
+  String name;
+  String type;
+  String token;
+  ZoomAccountInfo(
+      {this.email = '', this.name = '', this.token = '', this.type = ''});
+}
+
 class ZoomMeetingOptions {
   String? userId;
   String? displayName;
