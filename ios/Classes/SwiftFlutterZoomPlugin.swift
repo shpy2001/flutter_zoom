@@ -50,8 +50,8 @@ public class AuthenticationDelegate: NSObject, MobileRTCAuthDelegate {
         self.result = nil
     }
     
-    public func onMobileRTCLoginReturn(_ returnValue: Int) {
-        
+    public func onMobileRTCLoginResult(_ returnValue: MobileRTCLoginFailReason) {
+        sseft.result?(getLoginErrorCode(returnValue))
     }
     
     public func onMobileRTCLogoutReturn(_ returnValue: Int) {
@@ -254,19 +254,14 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
     
     public func loginWithEmail(call: FlutterMethodCall, result: @escaping FlutterResult)  {
         let auth = MobileRTC.shared().getAuthService()
+        auth?.delegate = self.authenticationDelegate.onAuth(result)
         let arguments = call.arguments as! Dictionary<String, String>
 
         if auth != nil {
-            if auth!.isLoggedIn() {
-                result(0)
-            }
-            else if auth!.login(withEmail: arguments["email"]!, password: arguments["password"]!, rememberMe: false) {
-                result(0)
-            }else{
-                result(6)
-            }
+             if !auth!.login(withEmail: arguments["email"]!, password: arguments["password"]!, rememberMe: false) {
+                result(100)
         }else{
-            result(6)
+            result(100)
         }
     }
     
@@ -708,6 +703,51 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         return code
     }
     
+    private func getLoginErrorCode(_ state: MobileRTCLoginFailReason?) -> Int {
+        var code : Int
+        switch state {
+        case MobileRTCLoginFailReason_EmailLoginDiable:
+            code = 1
+            break
+        case MobileRTCLoginFailReason_LoginTokenInvalid:
+            code = 10
+            break
+        case MobileRTCLoginFailReason_Success:
+            code = 0
+            break
+        case MobileRTCLoginFailReason_UserNotExist:
+            code = 2
+            break
+        case MobileRTCLoginFailReason_AccountLocked:
+            code = 4
+            break
+        case MobileRTCLoginFailReason_OtherIssue:
+            code = 100
+            break
+        case MobileRTCLoginFailReason_WrongPassword:
+            code = 3
+            break
+        case MobileRTCLoginFailReason_PhoneNumberFormatInValid:
+            code = 9
+            break
+        case MobileRTCLoginFailReason_SDKNeedUpdate:
+            code = 5
+            break
+        case MobileRTCLoginFailReason_SMSCodeError:
+            code = 7
+            break
+        case MobileRTCLoginFailReason_SMSCodeExpired:
+            code = 8
+            break
+        case MobileRTCLoginFailReason_TooManyFailedAttempts:
+            code = 6
+            break
+        default:
+            code = 100
+        }
+        return code
+    }
+
     private func getStateMessage(_ state: MobileRTCMeetingState?) -> [String] {
         
         var message: [String]
@@ -770,5 +810,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         
         return message
     }
+
+
     
 }

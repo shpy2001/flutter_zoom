@@ -80,7 +80,7 @@ class ZoomViewController {
     return zoomApiErrorFromInt[ret[0]] ?? ZoomApiError.ZOOM_API_INVALID_STATUS;
   }
 
-  Future<ZoomApiError> loginWithEmail(String email, String password,
+  Future<ZoomAuthenticationError> loginWithEmail(String email, String password,
       {bool shouldLogout = true}) async {
     if (shouldLogout) await logout();
 
@@ -88,7 +88,8 @@ class ZoomViewController {
     optionMap.putIfAbsent("email", () => email);
     optionMap.putIfAbsent("password", () => password);
     var ret = await _methodChannel.invokeMethod('login_with_email', optionMap);
-    return zoomApiErrorFromInt[ret] ?? ZoomApiError.ZOOM_API_INVALID_STATUS;
+    return zoomAuthenticationErrorFromInt[ret] ??
+        ZoomAuthenticationError.ZOOM_AUTH_ERROR_WRONG_OTHER_ISSUE;
   }
 
   Future<List?> loginWithSso(String sso, {bool shouldLogout = true}) async {
@@ -183,6 +184,21 @@ class ZoomViewController {
     6: ZoomApiError.ZOOM_API_ERROR_FAILED_WRONGPARAMETERS,
     0: ZoomApiError.ZOOM_API_ERROR_SUCCESS,
     101: ZoomApiError.ZOOM_API_INVALID_STATUS
+  };
+
+  static Map<int, ZoomAuthenticationError> zoomAuthenticationErrorFromInt = {
+    1: ZoomAuthenticationError.ZOOM_AUTH_EMAIL_LOGIN_DISABLE,
+    10: ZoomAuthenticationError.ZOOM_AUTH_ERROR_LOGINTOKENINVALID,
+    0: ZoomAuthenticationError.ZOOM_AUTH_ERROR_SUCCESS,
+    2: ZoomAuthenticationError.ZOOM_AUTH_ERROR_USER_NOT_EXIST,
+    4: ZoomAuthenticationError.ZOOM_AUTH_ERROR_WRONG_ACCOUNTLOCKED,
+    100: ZoomAuthenticationError.ZOOM_AUTH_ERROR_WRONG_OTHER_ISSUE,
+    3: ZoomAuthenticationError.ZOOM_AUTH_ERROR_WRONG_PASSWORD,
+    9: ZoomAuthenticationError.ZOOM_AUTH_ERROR_WRONG_PHONENUMBERFORMATINVALID,
+    5: ZoomAuthenticationError.ZOOM_AUTH_ERROR_WRONG_SDKNEEDUPDATE,
+    7: ZoomAuthenticationError.ZOOM_AUTH_ERROR_WRONG_SMSCODEERROR,
+    8: ZoomAuthenticationError.ZOOM_AUTH_ERROR_WRONG_SMSCODEEXPIRED,
+    6: ZoomAuthenticationError.ZOOM_AUTH_ERROR_WRONG_TOOMANY_FAILED_ATTEMPTS,
   };
 
   static Map<int, ZoomMeetingError> zoomMeetingErrorFromInt = {

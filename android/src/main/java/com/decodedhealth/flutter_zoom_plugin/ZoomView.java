@@ -43,6 +43,7 @@ public class ZoomView  implements PlatformView,
     private final MethodChannel methodChannel;
     private final Context context;
     private final EventChannel meetingStatusChannel;
+    private final EventChannel authStatusChannel;
 
     ZoomView(Context context, BinaryMessenger messenger, int id) {
         textView = new TextView(context);
@@ -52,6 +53,7 @@ public class ZoomView  implements PlatformView,
         methodChannel.setMethodCallHandler(this);
 
         meetingStatusChannel = new EventChannel(messenger, "com.decodedhealth/zoom_event_stream");
+        authStatusChannel = new EventChannel(messenger, "com.decodedhealth/zoom_auth_event_stream");
     }
 
     @Override
@@ -364,13 +366,39 @@ public class ZoomView  implements PlatformView,
         result.success(status != null ? Arrays.asList(status.name(), "") :  Arrays.asList("MEETING_STATUS_UNKNOWN", "No status available"));
     }
 
-    private void loginWithEmail(MethodCall methodCall, MethodChannel.Result result) {
+    private void loginWithEmail(final MethodCall methodCall,final MethodChannel.Result result) {
         Map<String, String> options = methodCall.arguments();
         ZoomSDK zoomSDK = ZoomSDK.getInstance();
+        final ZoomSDKAuthenticationListener listener = new ZoomSDKAuthenticationListener(){
+            @Override
+	        public void onZoomSDKLoginResult(long result1) {
+                result.success(result1);
+                ZoomSDK.getInstance().removeAuthenticationListener(this);
+            }
+            @Override
+	        public void onZoomSDKLogoutResult(long result1) {
+                result.success(result1);
+                ZoomSDK.getInstance().removeAuthenticationListener(this);
+            }
+            @Override
+	        public void onZoomAuthIdentityExpired() {
+                System.out.println("onZoomAuthIdentityExpired");
+            }
+            @Override
+	        public void onZoomIdentityExpired() {
+                System.out.println("onZoomIdentityExpired");
+            }
+        };
+        zoomSDK.addAuthenticationListener(listener);
+
         if(zoomSDK.isLoggedIn()) {
-            result.success(0);
+            zoomSDK.tryAutoLoginZoom();
         }else{
-            result.success(zoomSDK.loginWithZoom(options.get("email"),options.get("password")));
+            long ret = zoomSDK.loginWithZoom(options.get("email"),options.get("password"));
+            if (ret != 0) {
+                zoomSDK.removeAuthenticationListener(listener);
+                result.success(100);
+            }
         }
        
     }
