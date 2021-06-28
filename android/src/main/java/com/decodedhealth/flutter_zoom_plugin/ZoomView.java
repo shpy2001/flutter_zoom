@@ -246,8 +246,22 @@ public class ZoomView  implements PlatformView,
             InMeetingVideoController mInMeetingVideoController = mInMeetingService.getInMeetingVideoController();
             System.out.println(mInMeetingVideoController.muteMyVideo(Boolean.parseBoolean(options.get("muteMyVideo"))));
         }
-
-
+        if(Boolean.parseBoolean(options.get("shouldPinHost"))){
+            List<Long> userList = mInMeetingService.getInMeetingUserList();
+            if(userList != null){
+                for(int i=0; i<userList.size(); i++) {
+                    if(mInMeetingService.isHostUser(userList.get(i))){
+                        InMeetingVideoController mInMeetingVideoController = mInMeetingService.getInMeetingVideoController();
+                        mInMeetingVideoController.pinVideo(userList.get(i));
+                        break;
+                    }
+                }
+            }
+        }
+        if(Boolean.parseBoolean(options.get("shouldSpotlightHost"))){
+            List<Long> userList = mInMeetingService.getInMeetingUserList();
+            mInMeetingVideoController.spotLightVideo(true,getMyUserID());
+        }
     }
     
     private void getMeetingPassword(MethodChannel.Result result){
@@ -401,8 +415,8 @@ public class ZoomView  implements PlatformView,
         params.meetingNo = options.get("meetingNo");
         params.password = options.get("password");
 
-        meetingService.joinMeetingWithParams(context, params, opts);
-        result.success(true);
+        
+        result.success(meetingService.joinMeetingWithParams(context, params, opts));
     }
    
 

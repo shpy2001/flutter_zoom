@@ -372,11 +372,24 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             }else{
                 meetingService?.connectMyAudio(true)
             }
-            
-            // meetingService?.muteMyAudio(mute: parseBoolean(data: arguments["muteMyAudio"]!, defaultValue: false))
         }
         if arguments["muteMyVideo"]!! != "-1" {
             meetingService?.muteMyVideo(parseBoolean(data: arguments["muteMyVideo"]!, defaultValue: false))
+        }
+        if parseBoolean(data: arguments["shouldPinHost"]!, defaultValue: false){
+            let userList = meetingService?.getInMeetingUserList()
+            if userList != nil {
+                for user in userList! {
+                    if (meetingService!.isHostUser(user.integerValue)){
+                        meetingService?.pinVideo(true,withUser: user.integerValue)
+                        break
+                    }
+               }
+            }
+        }
+        if parseBoolean(data: arguments["shouldSpotlightHost"]!, defaultValue: false){
+            let userId = meetingService?.myselfUserID()
+            meetingService?.spotlightVideo(true , withUser : userId)
         }
     }
 
