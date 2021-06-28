@@ -12,27 +12,26 @@ class MeetingWidget extends StatelessWidget {
     appKey: "appKey",
     appSecret: "appSecret",
   );
-  final ZoomMeetingOptions meetingOptions = ZoomMeetingOptions(
-      userId: 'example',
-      // meetingId: meetingId,
-      // meetingPassword: meetingPassword,
-      disableDialIn: "true",
-      disableDrive: "true",
-      disableInvite: "true",
-      disableShare: "true",
-      noAudio: "false",
-      noDisconnectAudio: "false");
+  final ZoomMeetingOptionAll meetingOptions = ZoomMeetingOptionAll(
+    noTextMeetingId: true,
+    noTextPassword: true,
+    noTitlebar: false,
+    noShare: true,
+    noButtonShare: true,
+    noAudio: true,
+    noButtonParticipants: true,
+  );
 
   late Timer timer;
 
-  MeetingWidget({meetingId, meetingPassword}) {
+  MeetingWidget({required String meetingId, required String meetingPassword}) {
     // this.zoomOptions = new ZoomOptions(
     //   domain: "zoom.us",
     //   appKey: "appKey",
     //   appSecret: "appSecret",
     // );
-    meetingOptions.meetingId = meetingId;
-    meetingOptions.meetingPassword = meetingPassword;
+    meetingOptions.meetingNo = meetingId;
+    meetingOptions.password = meetingPassword;
   }
 
   bool _isMeetingEnded(String status) {
@@ -82,7 +81,7 @@ class MeetingWidget extends StatelessWidget {
                     .then((joinMeetingResult) {
                   timer = Timer.periodic(new Duration(seconds: 2), (timer) {
                     controller
-                        .meetingStatus(this.meetingOptions.meetingId!)
+                        .meetingStatus(this.meetingOptions.meetingNo!)
                         .then((status) {
                       print('Meeting Status Polling: $status');
                     });

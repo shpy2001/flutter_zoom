@@ -80,6 +80,10 @@ class ZoomViewController {
     return zoomApiErrorFromInt[ret[0]] ?? ZoomApiError.ZOOM_API_INVALID_STATUS;
   }
 
+  Future<void> releaseListener() async {
+    _methodChannel.invokeMethod('releaseListener');
+  }
+
   Future<ZoomAuthenticationError> loginWithEmail(String email, String password,
       {bool shouldLogout = true}) async {
     if (shouldLogout) await logout();
@@ -112,7 +116,6 @@ class ZoomViewController {
       ZoomMeetingOptionAll options) async {
     var ret = await _methodChannel.invokeMethod(
         'start_instant_meeting', options.toOptionMap());
-    print('SFLINK SDK FLUTTER: startInstantMeeting $ret');
     return zoomMeetingErrorFromInt[ret] ??
         ZoomMeetingError.MEETING_ERROR_UNKNOWN;
   }
@@ -135,21 +138,27 @@ class ZoomViewController {
     return _methodChannel.invokeMethod('start', optionMap);
   }
 
-  Future<bool?> joinMeeting(ZoomMeetingOptions options) async {
-    var optionMap = new Map<String, String?>();
-    optionMap.putIfAbsent("userId", () => options.userId);
-    optionMap.putIfAbsent("meetingId", () => options.meetingId);
-    optionMap.putIfAbsent("meetingPassword", () => options.meetingPassword);
-    optionMap.putIfAbsent("disableDialIn", () => options.disableDialIn);
-    optionMap.putIfAbsent("disableDrive", () => options.disableDrive);
-    optionMap.putIfAbsent("disableInvite", () => options.disableInvite);
-    optionMap.putIfAbsent("disableShare", () => options.disableShare);
-    optionMap.putIfAbsent("noDisconnectAudio", () => options.noDisconnectAudio);
-    optionMap.putIfAbsent("noAudio", () => options.noAudio);
-    optionMap.putIfAbsent("langCode", () => options.langCode);
-
-    return _methodChannel.invokeMethod('join', optionMap);
+  Future<ZoomMeetingError> joinMeeting(ZoomMeetingOptionAll options) async {
+    var ret = await _methodChannel.invokeMethod('join', options.toOptionMap());
+    print('Zoom joinmeeting return: $ret');
+    return zoomMeetingErrorFromInt[ret] ??
+        ZoomMeetingError.MEETING_ERROR_UNKNOWN;
   }
+  // Future<bool?> joinMeeting(ZoomMeetingOptions options) async {
+  //   var optionMap = new Map<String, String?>();
+  //   optionMap.putIfAbsent("userId", () => options.userId);
+  //   optionMap.putIfAbsent("meetingId", () => options.meetingId);
+  //   optionMap.putIfAbsent("meetingPassword", () => options.meetingPassword);
+  //   optionMap.putIfAbsent("disableDialIn", () => options.disableDialIn);
+  //   optionMap.putIfAbsent("disableDrive", () => options.disableDrive);
+  //   optionMap.putIfAbsent("disableInvite", () => options.disableInvite);
+  //   optionMap.putIfAbsent("disableShare", () => options.disableShare);
+  //   optionMap.putIfAbsent("noDisconnectAudio", () => options.noDisconnectAudio);
+  //   optionMap.putIfAbsent("noAudio", () => options.noAudio);
+  //   optionMap.putIfAbsent("langCode", () => options.langCode);
+
+  //   return _methodChannel.invokeMethod('join', optionMap);
+  // }
 
   Future<ZoomMeetingStatus> meetingStatus(String meetingId) async {
     var optionMap = new Map<String, String>();

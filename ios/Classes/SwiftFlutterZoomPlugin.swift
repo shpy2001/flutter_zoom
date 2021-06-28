@@ -51,123 +51,60 @@ public class AuthenticationDelegate: NSObject, MobileRTCAuthDelegate {
     }
     
     public func onMobileRTCLoginResult(_ returnValue: MobileRTCLoginFailReason) {
-        sseft.result?(getLoginErrorCode(returnValue))
+        self.result?(getLoginErrorCode(returnValue))
     }
+
     
     public func onMobileRTCLogoutReturn(_ returnValue: Int) {
         
     }
-    
-    public func getAuthErrorMessage(_ errorCode: MobileRTCAuthError) -> String {
-        
-        let message = ""
-        
-        // switch (errorCode) {
-        //     case MobileRTCMeetError_Success:
-        //         message = "Successfully start/join meeting."
-        //         break
-        //     case MobileRTCMeetError_NetworkError:
-        //         message = "Network issue, please check your network connection."
-        //         break
-        //     case MobileRTCMeetError_ReconnectError:
-        //         message = "Failed to reconnect to meeting."
-        //         break
-        //     case MobileRTCMeetError_MMRError:
-        //         message = "MMR issue, please check mmr configruation."
-        //         break
-        //     case MobileRTCMeetError_PasswordError:
-        //         message = "Meeting password incorrect."
-        //         break
-        //     case MobileRTCMeetError_SessionError:
-        //         message = "Failed to create a session with our sever."
-        //         break
-        //     case MobileRTCMeetError_MeetingOver:
-        //         message = "The meeting is over."
-        //         break
-        //     case MobileRTCMeetError_MeetingNotStart:
-        //         message = "The meeting does not start."
-        //         break
-        //     case MobileRTCMeetError_MeetingNotExist:
-        //         message = "The meeting does not exist."
-        //         break
-        //     case MobileRTCMeetError_MeetingUserFull:
-        //         message = "The meeting has reached a maximum of participants."
-        //         break
-        //     case MobileRTCMeetError_MeetingClientIncompatible:
-        //         message = "The Zoom SDK version is incompatible."
-        //         break
-        //     case MobileRTCMeetError_NoMMR:
-        //         message = "No mmr is available at this point."
-        //         break
-        //     case MobileRTCMeetError_MeetingLocked:
-        //         message = "The meeting is locked by the host."
-        //         break
-        //     case MobileRTCMeetError_MeetingRestricted:
-        //         message = "The meeting is restricted."
-        //         break
-        //     case MobileRTCMeetError_MeetingRestrictedJBH:
-        //         message = "The meeting does not allow join before host. Please try again later."
-        //         break
-        //     case MobileRTCMeetError_CannotEmitWebRequest:
-        //         message = "Failed to send create meeting request to server."
-        //         break
-        //     case MobileRTCMeetError_CannotStartTokenExpire:
-        //         message = "Failed to start meeting due to token exipred."
-        //         break
-        //     case MobileRTCMeetError_VideoError:
-        //         message = "The user's video cannot work."
-        //         break
-        //     case MobileRTCMeetError_AudioAutoStartError:
-        //         message = "The user's audio cannot auto start."
-        //         break
-        //     case MobileRTCMeetError_RegisterWebinarFull:
-        //         message = "The webinar has reached its maximum allowed participants."
-        //         break
-        //     case MobileRTCMeetError_RegisterWebinarHostRegister:
-        //         message = "Sign in to start the webinar."
-        //         break
-        //     case MobileRTCMeetError_RegisterWebinarPanelistRegister:
-        //         message = "Join the webinar from the link"
-        //         break
-        //     case MobileRTCMeetError_RegisterWebinarDeniedEmail:
-        //         message = "The host has denied your webinar registration."
-        //         break
-        //     case MobileRTCMeetError_RegisterWebinarEnforceLogin:
-        //         message = "The webinar requires sign-in with specific account to join."
-        //         break
-        //     case MobileRTCMeetError_ZCCertificateChanged:
-        //         message = "The certificate of ZC has been changed. Please contact Zoom for further support."
-        //         break
-        //     case MobileRTCMeetError_VanityNotExist:
-        //         message = "The vanity does not exist"
-        //         break
-        //     case MobileRTCMeetError_JoinWebinarWithSameEmail:
-        //         message = "The email address has already been register in this webinar."
-        //         break
-        //     case MobileRTCMeetError_WriteConfigFile:
-        //         message = "Failed to write config file."
-        //         break
-        //     case MobileRTCMeetError_RemovedByHost:
-        //         message = "You have been removed by the host."
-        //         break
-        //     case MobileRTCMeetError_InvalidArguments:
-        //         message = "Invalid arguments."
-        //         break
-        //     case MobileRTCMeetError_InvalidUserType:
-        //         message = "Invalid user type."
-        //         break
-        //     case MobileRTCMeetError_InAnotherMeeting:
-        //         message = "Already in another ongoing meeting."
-        //         break
-        //     case MobileRTCMeetError_Unknown:
-        //         message = "Unknown error."
-        //         break
-        //     default:
-        //         message = "Unknown error."
-        //         break
-        // }
-        return message
+
+    public func getLoginErrorCode(_ state: MobileRTCLoginFailReason?) -> Int {
+        var code : Int
+        switch state {
+        case .emailLoginDiable:
+            code = 1
+            break
+        case .loginTokenInvalid:
+            code = 10
+            break
+        case .success:
+            code = 0
+            break
+        case .userNotExist:
+            code = 2
+            break
+        case .accountLocked:
+            code = 4
+            break
+        case .otherIssue:
+            code = 100
+            break
+        case .wrongPassword:
+            code = 3
+            break
+        case .phoneNumberFormatInValid:
+            code = 9
+            break
+        case .sdkNeedUpdate:
+            code = 5
+            break
+        case .smsCodeError:
+            code = 7
+            break
+        case .smsCodeExpired:
+            code = 8
+            break
+        case .tooManyFailedAttempts:
+            code = 6
+            break
+        default:
+            code = 100
+        }
+        return code
     }
+    
+   
 }
 
 public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDelegate, FlutterStreamHandler {
@@ -225,7 +162,9 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         case "get_meeting_password":
             self.getMeetingPassword(result: result)
         case "get_logged_account_info":
-            self.getLoggedAccountInfo(result: sresult);
+            self.getLoggedAccountInfo(result: result);
+        case "releaseListener":
+            self.releaseListener();
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -251,18 +190,33 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         auth?.jwtToken = arguments["sdkToken"]!
         auth?.sdkAuth()
     }
+
+    public func releaseListener(){
+        let auth = MobileRTC.shared().getAuthService()
+        if auth != nil {
+            auth!.delegate = nil
+        }
+
+        let meetingService = MobileRTC.shared().getMeetingService()
+        if meetingService != nil {
+            meetingService!.delegate = nil
+        }
+
+    }
     
     public func loginWithEmail(call: FlutterMethodCall, result: @escaping FlutterResult)  {
         let auth = MobileRTC.shared().getAuthService()
-        auth?.delegate = self.authenticationDelegate.onAuth(result)
+
         let arguments = call.arguments as! Dictionary<String, String>
 
-        if auth != nil {
-             if !auth!.login(withEmail: arguments["email"]!, password: arguments["password"]!, rememberMe: false) {
+            if auth != nil {
+                auth!.delegate = self.authenticationDelegate.onAuth(result)
+                if !auth!.login(withEmail: arguments["email"]!, password: arguments["password"]!, rememberMe: false) {
+                    result(100)
+                }
+            }else {
                 result(100)
-        }else{
-            result(100)
-        }
+            }
     }
     
     public func loginWithSso(call: FlutterMethodCall, result: @escaping FlutterResult)  {
@@ -300,12 +254,12 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         result([meetingInviteHelper.ongoingMeetingNumber , meetingInviteHelper.rawMeetingPassword ])
     }
     public func getLoggedAccountInfo(result: @escaping FlutterResult)  {
-        let accountInfo = MobileRTC.shared().getAuthService().getAccountInfo()
+        let accountInfo = MobileRTC.shared().getAuthService()?.getAccountInfo()
         if accountInfo == nil {
             result(["",""])
             return
         }
-        result([accountInfo.getEmailAddress() , accountInfo.getUserName() ])
+        result([accountInfo!.getEmailAddress() , accountInfo!.getUserName() ])
     }
     
     public func meetingStatus(call: FlutterMethodCall, result: FlutterResult) {
@@ -320,80 +274,69 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         }
     }
     
-    public func joinMeeting(call: FlutterMethodCall, result: FlutterResult) {
+    // public func joinMeeting(call: FlutterMethodCall, result: FlutterResult) {
         
-        let meetingService = MobileRTC.shared().getMeetingService()
-        let meetingSettings = MobileRTC.shared().getMeetingSettings()
+    //     let meetingService = MobileRTC.shared().getMeetingService()
+    //     let meetingSettings = MobileRTC.shared().getMeetingSettings()
         
-        if meetingService != nil {
+    //     if meetingService != nil {
             
-            let arguments = call.arguments as! Dictionary<String, String?>
+    //         let arguments = call.arguments as! Dictionary<String, String?>
 
-            MobileRTC.shared().setLanguage(arguments["langCode"]!!)
-            // let langCode = arguments["langCode"]! != nil;
-            // if langCode {
-            //     MobileRTC.shared().setLanguage(arguments["langCode"]!!)
-            // }
+    //         MobileRTC.shared().setLanguage(arguments["langCode"]!!)
+    //         // let langCode = arguments["langCode"]! != nil;
+    //         // if langCode {
+    //         //     MobileRTC.shared().setLanguage(arguments["langCode"]!!)
+    //         // }
             
             
-            meetingSettings?.disableDriveMode(parseBoolean(data: arguments["disableDrive"]!, defaultValue: false))
-            meetingSettings?.disableCall(in: parseBoolean(data: arguments["disableDialIn"]!, defaultValue: false))
-            meetingSettings?.setAutoConnectInternetAudio(parseBoolean(data: arguments["noDisconnectAudio"]!, defaultValue: false))
-            meetingSettings?.setMuteAudioWhenJoinMeeting(parseBoolean(data: arguments["noAudio"]!, defaultValue: false))
-            meetingSettings?.meetingShareHidden = parseBoolean(data: arguments["disableShare"]!, defaultValue: false)
-            meetingSettings?.meetingInviteHidden = parseBoolean(data: arguments["disableDrive"]!, defaultValue: false)
+    //         meetingSettings?.disableDriveMode(parseBoolean(data: arguments["disableDrive"]!, defaultValue: false))
+    //         meetingSettings?.disableCall(in: parseBoolean(data: arguments["disableDialIn"]!, defaultValue: false))
+    //         meetingSettings?.setAutoConnectInternetAudio(parseBoolean(data: arguments["noDisconnectAudio"]!, defaultValue: false))
+    //         meetingSettings?.setMuteAudioWhenJoinMeeting(parseBoolean(data: arguments["noAudio"]!, defaultValue: false))
+    //         meetingSettings?.meetingShareHidden = parseBoolean(data: arguments["disableShare"]!, defaultValue: false)
+    //         meetingSettings?.meetingInviteHidden = parseBoolean(data: arguments["disableDrive"]!, defaultValue: false)
        
-            // meetingSettings?.topBarHidden = true;
+    //         // meetingSettings?.topBarHidden = true;
 
-            meetingSettings?.meetingTitleHidden = true;
-            meetingSettings?.meetingPasswordHidden = true;
-            meetingSettings?.meetingParticipantHidden = true;
-            meetingSettings?.meetingLeaveHidden = false;
-            meetingSettings?.meetingInviteHidden = true;
-            // meetingSettings?.enableCustomMeeting = true;
-            meetingSettings?.setMuteVideoWhenJoinMeeting(false)
-            meetingSettings?.disableVirtualBackground(false)
-            meetingSettings?.disableCopyMeetingUrl(true)
-            meetingSettings?.disableShowVideoPreview(whenJoinMeeting:true)
+    //         meetingSettings?.meetingTitleHidden = true;
+    //         meetingSettings?.meetingPasswordHidden = true;
+    //         meetingSettings?.meetingParticipantHidden = true;
+    //         meetingSettings?.meetingLeaveHidden = false;
+    //         meetingSettings?.meetingInviteHidden = true;
+    //         // meetingSettings?.enableCustomMeeting = true;
+    //         meetingSettings?.setMuteVideoWhenJoinMeeting(false)
+    //         meetingSettings?.disableVirtualBackground(false)
+    //         meetingSettings?.disableCopyMeetingUrl(true)
+    //         meetingSettings?.disableShowVideoPreview(whenJoinMeeting:true)
             
-            var params = [
-                kMeetingParam_Username: arguments["userId"]!!,
-                kMeetingParam_MeetingNumber: arguments["meetingId"]!!
-            ]
+    //         var params = [
+    //             kMeetingParam_Username: arguments["userId"]!!,
+    //             kMeetingParam_MeetingNumber: arguments["meetingId"]!!
+    //         ]
             
-            let param = MobileRTCMeetingJoinParam();
-            param.noVideo = false;
-            param.userName = arguments["userId"]!!;
-            param.meetingNumber = arguments["meetingId"]!!
+    //         let param = MobileRTCMeetingJoinParam();
+    //         param.noVideo = false;
+    //         param.userName = arguments["userId"]!!;
+    //         param.meetingNumber = arguments["meetingId"]!!
             
-            let hasPassword = arguments["meetingPassword"]! != nil
-            if hasPassword {
-                params[kMeetingParam_MeetingPassword] = arguments["meetingPassword"]!!
-                param.password = arguments["meetingPassword"]!!
-            }
+    //         let hasPassword = arguments["meetingPassword"]! != nil
+    //         if hasPassword {
+    //             params[kMeetingParam_MeetingPassword] = arguments["meetingPassword"]!!
+    //             param.password = arguments["meetingPassword"]!!
+    //         }
             
-//            let response = meetingService?.joinMeeting(with: params)
-            let response = meetingService?.joinMeeting(with: param)
+    //         let response = meetingService?.joinMeeting(with: param)
             
-            if let response = response {
-                print("Got response from join: \(response)")
-            }
+    //         if let response = response {
+    //             print("Got response from join: \(response)")
+    //         }
 
-            // let userList = meetingService?.getInMeetingUserList()
-            // if userList != nil {
-            //    for user in (userList! as [Any]) {
-            //        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",user)
-            //        if (meetingService!.isHostUser(user as! UInt)){
-            //            print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-            //            meetingService?.pinVideo(true,withUser: user as! UInt)
-            //        }
-            //    }
-            // }
-            result(true)
-        } else {
-            result(false)
-        }
-    }
+    //         result(true)
+    //     } else {
+    //         result(false)
+    //     }
+    // }
 
     public func inMeeting(call: FlutterMethodCall, result: @escaping FlutterResult){
         let meetingService = MobileRTC.shared().getMeetingService()
@@ -424,7 +367,13 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             meetingService?.allowParticipants(toUnmuteSelf : parseBoolean(data: arguments["allowParticipantsToUnmuteSelf"]!, defaultValue: false))
         }
         if arguments["muteMyAudio"]!! != "-1" {
-            meetingService?.muteMyAudio(parseBoolean(data: arguments["muteMyAudio"]!, defaultValue: false))
+            if parseBoolean(data: arguments["muteMyAudio"]!, defaultValue: false) {
+                meetingService?.muteMyAudio(false)
+            }else{
+                meetingService?.connectMyAudio(true)
+            }
+            
+            // meetingService?.muteMyAudio(mute: parseBoolean(data: arguments["muteMyAudio"]!, defaultValue: false))
         }
         if arguments["muteMyVideo"]!! != "-1" {
             meetingService?.muteMyVideo(parseBoolean(data: arguments["muteMyVideo"]!, defaultValue: false))
@@ -518,9 +467,104 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         }else{
             result(998)
         }
+    }
+
+    public func joinMeeting(call: FlutterMethodCall, result: FlutterResult) {
+        
+        let meetingService = MobileRTC.shared().getMeetingService()
+        let meetingSettings = MobileRTC.shared().getMeetingSettings()
+
+        let arguments = call.arguments as! Dictionary<String, String?>
+        
+        if meetingService != nil {
             
-        
-        
+            //opts.no_bottom_toolbar = parseBoolean(options, "noBottomToolbar", false); 
+            meetingSettings?.bottomBarHidden = parseBoolean(data: arguments["noBottomToolbar"]!, defaultValue: false)
+
+            //opts.no_chat_msg_toast = parseBoolean(options, "noChatMsgToast", false);
+
+            //opts.no_dial_in_via_phone = parseBoolean(options, "noDialInViaPhone", false);
+            meetingSettings?.disableCall(in : parseBoolean(data: arguments["noDialInViaPhone"]!, defaultValue: true)) 
+            //opts.no_dial_out_to_phone = parseBoolean(options, "noDialOutToPhone", false); 
+            meetingSettings?.disableCallOut(parseBoolean(data: arguments["noDialOutToPhone"]!, defaultValue: true))
+
+            //opts.no_disconnect_audio = parseBoolean(options, "noDisconnectAudio", false); 
+            meetingSettings?.setAutoConnectInternetAudio(parseBoolean(data: arguments["noDisconnectAudio"]!, defaultValue: true))
+
+            //opts.no_driving_mode = parseBoolean(options, "noDrivingMode", false); 
+            meetingSettings?.disableDriveMode(parseBoolean(data: arguments["noDrivingMode"]!, defaultValue: false))
+
+            //opts.no_invite = parseBoolean(options, "noInvite", false); 
+            meetingSettings?.meetingInviteHidden = parseBoolean(data: arguments["noInvite"]!, defaultValue: true)
+
+            //opts.no_meeting_end_message = parseBoolean(options, "noMeetingEndMessage", false); 
+            //opts.no_meeting_error_message = parseBoolean(options, "noMeetingErrorMessage", false); 
+
+            //opts.no_share = parseBoolean(options, "noShare", false); 
+            meetingSettings?.meetingShareHidden = parseBoolean(data: arguments["noShare"]!, defaultValue: false)
+
+            //opts.no_titlebar = parseBoolean(options, "noTitlebar", false); 
+            meetingSettings?.meetingTitleHidden = parseBoolean(data: arguments["noTitlebar"]!, defaultValue: false)
+            
+            //opts.no_unmute_confirm_dialog = parseBoolean(options, "noUnmuteConfirmDialog", false); 
+
+            //opts.no_video = parseBoolean(options, "noVideo", false); 
+            meetingSettings?.setMuteVideoWhenJoinMeeting(parseBoolean(data: arguments["noVideo"]!, defaultValue: false))
+
+            //opts.no_webinar_register_dialog = parseBoolean(options, "noWebinarRegisterDialog", false); 
+            //opts.participant_id = options.get("participantId"); 
+
+            //opts.no_audio = parseBoolean(options, "noAudio", false); 
+            meetingSettings?.setMuteAudioWhenJoinMeeting(parseBoolean(data: arguments["noAudio"]!, defaultValue: false))
+
+            //inviteCopyUrl
+            meetingSettings?.disableCopyMeetingUrl(!parseBoolean(data: arguments["inviteCopyUrl"]!, defaultValue: false))
+            
+            //noButtonAudio
+            meetingSettings?.meetingAudioHidden = parseBoolean(data: arguments["noButtonAudio"]!, defaultValue: true)
+            //noButtonLeave
+            meetingSettings?.meetingLeaveHidden = parseBoolean(data: arguments["noButtonLeave"]!, defaultValue: true)
+            //noButtonMore
+            meetingSettings?.meetingMoreHidden = parseBoolean(data: arguments["noButtonMore"]!, defaultValue: true)
+            //noButtonParticipants
+            meetingSettings?.meetingParticipantHidden = parseBoolean(data: arguments["noButtonParticipants"]!, defaultValue: true)
+            //noButtonShare
+            meetingSettings?.meetingShareHidden = parseBoolean(data: arguments["noButtonShare"]!, defaultValue: true)
+            
+            //noButtonSwitchAudio
+            //noButtonSwitchCamera
+
+            //noButtonVideo
+            meetingSettings?.meetingVideoHidden = parseBoolean(data: arguments["noButtonVideo"]!, defaultValue: true)
+
+            //noTextMeetingId
+
+            //noTextPassword
+            meetingSettings?.meetingPasswordHidden = parseBoolean(data: arguments["noTextPassword"]!, defaultValue: true)
+            
+            
+
+            meetingSettings?.disableShowVideoPreview(whenJoinMeeting:true)
+
+            //   opts.custom_meeting_id = options.get("customMeetingId");
+            meetingService?.customizeMeetingTitle(arguments["customMeetingId"]!)
+            
+            
+            let param = MobileRTCMeetingJoinParam();
+            // param.noVideo = false;
+            param.userName = arguments["displayName"]!!;
+            param.meetingNumber = arguments["meetingNo"]!!
+            param.password = arguments["password"]!!
+
+            // let hasPassword = arguments["password"]! != nil
+            // if hasPassword {
+            //     param.password = arguments["password"]!!
+            // }
+            let ret = meetingService?.joinMeeting(with: param)
+            result(getMeetingErrorCode(ret))
+        } else {
+            result(998)
+        }
     }
 
     public func startMeeting(call: FlutterMethodCall, result: FlutterResult) {
@@ -661,9 +705,9 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         case .meetingOver:
             code = 8
             break
-        // case .mMRError:
-        //     code = 6
-        //     break
+        case .mmrError:
+            code = 6
+            break
         case .networkError:
             code = 5
             break
@@ -703,51 +747,6 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         return code
     }
     
-    private func getLoginErrorCode(_ state: MobileRTCLoginFailReason?) -> Int {
-        var code : Int
-        switch state {
-        case MobileRTCLoginFailReason_EmailLoginDiable:
-            code = 1
-            break
-        case MobileRTCLoginFailReason_LoginTokenInvalid:
-            code = 10
-            break
-        case MobileRTCLoginFailReason_Success:
-            code = 0
-            break
-        case MobileRTCLoginFailReason_UserNotExist:
-            code = 2
-            break
-        case MobileRTCLoginFailReason_AccountLocked:
-            code = 4
-            break
-        case MobileRTCLoginFailReason_OtherIssue:
-            code = 100
-            break
-        case MobileRTCLoginFailReason_WrongPassword:
-            code = 3
-            break
-        case MobileRTCLoginFailReason_PhoneNumberFormatInValid:
-            code = 9
-            break
-        case MobileRTCLoginFailReason_SDKNeedUpdate:
-            code = 5
-            break
-        case MobileRTCLoginFailReason_SMSCodeError:
-            code = 7
-            break
-        case MobileRTCLoginFailReason_SMSCodeExpired:
-            code = 8
-            break
-        case MobileRTCLoginFailReason_TooManyFailedAttempts:
-            code = 6
-            break
-        default:
-            code = 100
-        }
-        return code
-    }
-
     private func getStateMessage(_ state: MobileRTCMeetingState?) -> [String] {
         
         var message: [String]
@@ -810,7 +809,5 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         
         return message
     }
-
-
     
 }

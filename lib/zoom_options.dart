@@ -57,8 +57,8 @@ class ZoomMeetingOptionAll {
   //meeting params
   final String?
       displayName; // JoinMeetingParams , StartMeetingParamsWithoutLogin
-  final String? meetingNo; // JoinMeetingParams , StartMeetingParams4NormalUser
-  final String? password; // JoinMeetingParams
+  String? meetingNo; // JoinMeetingParams , StartMeetingParams4NormalUser
+  String? password; // JoinMeetingParams
   final String? vanityID; // JoinMeetingParams , StartMeetingParams4NormalUser
 
   final String?
@@ -122,7 +122,7 @@ class ZoomMeetingOptionAll {
       this.userType,
       this.zoomAccessToken,
       // meeting options
-      this.customMeetingId,
+      this.customMeetingId = 'SFLink',
       this.noBottomToolbar = false,
       this.noChatMsgToast = false,
       this.noDialInViaPhone = true,
@@ -180,7 +180,7 @@ class ZoomMeetingOptionAll {
   }
 
   Map<String, String?> toOptionMap() => {
-        'displayName': displayName.toString(),
+        'displayName': displayName ?? '',
         'meetingNo': meetingNo.toString(),
         'password': password.toString(),
         'vanityID': vanityID.toString(),

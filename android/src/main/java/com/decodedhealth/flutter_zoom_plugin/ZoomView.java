@@ -100,6 +100,9 @@ public class ZoomView  implements PlatformView,
             case "get_logged_account_info":
                 getLoggedAccountInfo(result);
                 break;
+            case "releaseListener":
+            releaseListener();
+                break;
             default:
                 result.notImplemented();
         }
@@ -158,48 +161,52 @@ public class ZoomView  implements PlatformView,
                 initParams);
     }
 
-    private void joinMeeting(MethodCall methodCall, MethodChannel.Result result) {
+    private void releaseListener(){
 
-        Map<String, String> options = methodCall.arguments();
-
-        ZoomSDK zoomSDK = ZoomSDK.getInstance();
-
-        if(!zoomSDK.isInitialized()) {
-            System.out.println("Not initialized!!!!!!");
-            result.success(false);
-            return;
-        }
-
-        zoomSDK.setSdkLocale(context,new Locale(options.get("langCode")));
-
-        final MeetingService meetingService = zoomSDK.getMeetingService();
-
-        JoinMeetingOptions opts = new JoinMeetingOptions();
-        opts.no_invite = parseBoolean(options, "disableInvite", false);
-        opts.no_share = parseBoolean(options, "disableShare", false);
-        opts.no_driving_mode = parseBoolean(options, "disableDrive", false);
-        opts.no_dial_in_via_phone = parseBoolean(options, "disableDialIn", false);
-        opts.no_disconnect_audio = parseBoolean(options, "noDisconnectAudio", false);
-        opts.no_audio = parseBoolean(options, "noAudio", false);
-
-        opts.no_video = false;
-		opts.meeting_views_options = MeetingViewsOptions.NO_TEXT_PASSWORD + MeetingViewsOptions.NO_TEXT_MEETING_ID + MeetingViewsOptions.NO_BUTTON_PARTICIPANTS + MeetingViewsOptions.NO_BUTTON_SHARE;
-        
-        MeetingSettingsHelper msHelper = zoomSDK.getMeetingSettingsHelper();
-        msHelper.setAutoConnectVoIPWhenJoinMeeting(true);
-        msHelper.setMuteMyMicrophoneWhenJoinMeeting(true);
-        msHelper.setTurnOffMyVideoWhenJoinMeeting(false);
-        msHelper.disableShowVideoPreviewWhenJoinMeeting(true);
-
-        JoinMeetingParams params = new JoinMeetingParams();
-
-        params.displayName = options.get("userId");
-        params.meetingNo = options.get("meetingId");
-        params.password = options.get("meetingPassword");
-
-        meetingService.joinMeetingWithParams(context, params, opts);
-        result.success(true);
     }
+
+    // private void joinMeeting(MethodCall methodCall, MethodChannel.Result result) {
+
+    //     Map<String, String> options = methodCall.arguments();
+
+    //     ZoomSDK zoomSDK = ZoomSDK.getInstance();
+
+    //     if(!zoomSDK.isInitialized()) {
+    //         System.out.println("Not initialized!!!!!!");
+    //         result.success(false);
+    //         return;
+    //     }
+
+    //     zoomSDK.setSdkLocale(context,new Locale(options.get("langCode")));
+
+    //     final MeetingService meetingService = zoomSDK.getMeetingService();
+
+    //     JoinMeetingOptions opts = new JoinMeetingOptions();
+    //     opts.no_invite = parseBoolean(options, "disableInvite", false);
+    //     opts.no_share = parseBoolean(options, "disableShare", false);
+    //     opts.no_driving_mode = parseBoolean(options, "disableDrive", false);
+    //     opts.no_dial_in_via_phone = parseBoolean(options, "disableDialIn", false);
+    //     opts.no_disconnect_audio = parseBoolean(options, "noDisconnectAudio", false);
+    //     opts.no_audio = parseBoolean(options, "noAudio", false);
+
+    //     opts.no_video = false;
+	// 	opts.meeting_views_options = MeetingViewsOptions.NO_TEXT_PASSWORD + MeetingViewsOptions.NO_TEXT_MEETING_ID + MeetingViewsOptions.NO_BUTTON_PARTICIPANTS + MeetingViewsOptions.NO_BUTTON_SHARE;
+        
+    //     MeetingSettingsHelper msHelper = zoomSDK.getMeetingSettingsHelper();
+    //     msHelper.setAutoConnectVoIPWhenJoinMeeting(true);
+    //     msHelper.setMuteMyMicrophoneWhenJoinMeeting(true);
+    //     msHelper.setTurnOffMyVideoWhenJoinMeeting(false);
+    //     msHelper.disableShowVideoPreviewWhenJoinMeeting(true);
+
+    //     JoinMeetingParams params = new JoinMeetingParams();
+
+    //     params.displayName = options.get("userId");
+    //     params.meetingNo = options.get("meetingId");
+    //     params.password = options.get("meetingPassword");
+
+    //     meetingService.joinMeetingWithParams(context, params, opts);
+    //     result.success(true);
+    // }
 
     private void inMeeting(MethodCall methodCall, MethodChannel.Result result){
         InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
@@ -342,6 +349,60 @@ public class ZoomView  implements PlatformView,
 
         // System.out.println(mInMeetingService.getMeetingPassword());
         result.success(ret);
+    }
+
+    private void joinMeeting(MethodCall methodCall, MethodChannel.Result result) {
+
+        Map<String, String> options = methodCall.arguments();
+
+        ZoomSDK zoomSDK = ZoomSDK.getInstance();
+
+        if(!zoomSDK.isInitialized()) {
+            System.out.println("Not initialized!!!!!!");
+            result.success(998);
+            return;
+        }
+
+        zoomSDK.setSdkLocale(context,new Locale(options.get("langCode")));
+
+        final MeetingService meetingService = zoomSDK.getMeetingService();
+
+        JoinMeetingOptions opts = new JoinMeetingOptions();
+        opts.custom_meeting_id = options.get("customMeetingId");
+        opts.invite_options = Integer.parseInt(options.get("inviteOptions")); 
+        opts.meeting_views_options = Integer.parseInt(options.get("meetingViewsOptions")); 
+        opts.no_bottom_toolbar = parseBoolean(options, "noBottomToolbar", false); 
+        opts.no_chat_msg_toast = parseBoolean(options, "noChatMsgToast", false); 
+        opts.no_dial_in_via_phone = parseBoolean(options, "noDialInViaPhone", false); 
+        opts.no_dial_out_to_phone = parseBoolean(options, "noDialOutToPhone", false); 
+        opts.no_disconnect_audio = parseBoolean(options, "noDisconnectAudio", false); 
+        opts.no_driving_mode = parseBoolean(options, "noDrivingMode", false); 
+        opts.no_invite = parseBoolean(options, "noInvite", false); 
+        opts.no_meeting_end_message = parseBoolean(options, "noMeetingEndMessage", false); 
+        opts.no_meeting_error_message = parseBoolean(options, "noMeetingErrorMessage", false); 
+        opts.no_share = parseBoolean(options, "noShare", false); 
+        opts.no_titlebar = parseBoolean(options, "noTitlebar", false); 
+        opts.no_unmute_confirm_dialog = parseBoolean(options, "noUnmuteConfirmDialog", false); 
+        opts.no_video = parseBoolean(options, "noVideo", false); 
+        opts.no_webinar_register_dialog = parseBoolean(options, "noWebinarRegisterDialog", false); 
+        opts.participant_id = options.get("participantId"); 
+        opts.no_audio = parseBoolean(options, "noAudio", false); 
+        opts.participant_id = options.get("webinarToken "); 
+
+        // MeetingSettingsHelper msHelper = zoomSDK.getMeetingSettingsHelper();
+        // msHelper.setAutoConnectVoIPWhenJoinMeeting(true);
+        // msHelper.setMuteMyMicrophoneWhenJoinMeeting(true);
+        // msHelper.setTurnOffMyVideoWhenJoinMeeting(false);
+        // msHelper.disableShowVideoPreviewWhenJoinMeeting(true);
+
+        JoinMeetingParams params = new JoinMeetingParams();
+
+        params.displayName = options.get("displayName");
+        params.meetingNo = options.get("meetingNo");
+        params.password = options.get("password");
+
+        meetingService.joinMeetingWithParams(context, params, opts);
+        result.success(true);
     }
    
 
