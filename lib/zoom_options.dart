@@ -232,6 +232,7 @@ class ZoomInMeetingConfig {
   final String? allowParticipantsToUnmuteSelf;
   final String? muteMyAudio;
   final String? muteMyVideo;
+  final String? changeName;
   final bool shouldPinHost;
   final bool shouldSpotlightHost;
   ZoomInMeetingConfig(
@@ -240,6 +241,7 @@ class ZoomInMeetingConfig {
       this.allowParticipantsToUnmuteSelf,
       this.muteMyAudio,
       this.muteMyVideo,
+      this.changeName,
       this.shouldPinHost = false,
       this.shouldSpotlightHost = false});
 
@@ -249,6 +251,7 @@ class ZoomInMeetingConfig {
         'allowParticipantsToUnmuteSelf': allowParticipantsToUnmuteSelf ?? '-1',
         'muteMyAudio': muteMyAudio ?? '-1',
         'muteMyVideo': muteMyVideo ?? '-1',
+        'changeName': changeName ?? '-1',
         'shouldPinHost': shouldPinHost.toString(),
         'shouldSpotlightHost': shouldSpotlightHost.toString()
       };

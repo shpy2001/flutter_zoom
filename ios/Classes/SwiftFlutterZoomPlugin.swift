@@ -359,7 +359,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         if arguments["setMeetingTopic"]!! != "-1" {
             meetingService?.setMeetingTopic(arguments["setMeetingTopic"]!!)
         }
-
+        
         if arguments["allowParticipantsToRename"]!! != "-1" {
             meetingService?.allowParticipants(toRename :parseBoolean(data: arguments["allowParticipantsToRename"]!, defaultValue: false))
         }
@@ -367,21 +367,28 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             meetingService?.allowParticipants(toUnmuteSelf : parseBoolean(data: arguments["allowParticipantsToUnmuteSelf"]!, defaultValue: false))
         }
         if arguments["muteMyAudio"]!! != "-1" {
-            if parseBoolean(data: arguments["muteMyAudio"]!, defaultValue: false) {
-                meetingService?.muteMyAudio(false)
-            }else{
-                meetingService?.connectMyAudio(true)
-            }
+            meetingService?.muteMyAudio(parseBoolean(data: arguments["muteMyAudio"]!, defaultValue: false))
+            // if parseBoolean(data: arguments["muteMyAudio"]!, defaultValue: false) {
+            //     meetingService?.muteMyAudio(false)
+            // }else{
+            //     meetingService?.connectMyAudio(true)
+            // }
         }
         if arguments["muteMyVideo"]!! != "-1" {
             meetingService?.muteMyVideo(parseBoolean(data: arguments["muteMyVideo"]!, defaultValue: false))
         }
+
+        if arguments["changeName"]!! != "-1" {
+            let userId = meetingService?.myselfUserID()
+            meetingService?.changeName(arguments["changeName"]!! , withUserID : userId!)
+        }
+
         if parseBoolean(data: arguments["shouldPinHost"]!, defaultValue: false){
             let userList = meetingService?.getInMeetingUserList()
             if userList != nil {
                 for user in userList! {
-                    if (meetingService!.isHostUser(user.integerValue)){
-                        meetingService?.pinVideo(true,withUser: user.integerValue)
+                    if (meetingService!.isHostUser(user.uintValue)){
+                        meetingService?.pinVideo(true,withUser: user.uintValue)
                         break
                     }
                }
@@ -389,7 +396,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         }
         if parseBoolean(data: arguments["shouldSpotlightHost"]!, defaultValue: false){
             let userId = meetingService?.myselfUserID()
-            meetingService?.spotlightVideo(true , withUser : userId)
+            meetingService?.spotlightVideo(true , withUser : userId!)
         }
     }
 
@@ -475,6 +482,8 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             let user: MobileRTCMeetingStartParam4LoginlUser = MobileRTCMeetingStartParam4LoginlUser.init()
             let param: MobileRTCMeetingStartParam = user
             param.meetingNumber = ""
+            param.noAudio = parseBoolean(data: arguments["noAudio"]!, defaultValue: false)
+            param.noVideo = parseBoolean(data: arguments["noVideo"]!, defaultValue: false)
 
             result(getMeetingErrorCode(meetingService?.startMeeting(with: param)))
         }else{
@@ -564,7 +573,8 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             
             
             let param = MobileRTCMeetingJoinParam();
-            // param.noVideo = false;
+            param.noAudio = parseBoolean(data: arguments["noAudio"]!, defaultValue: false)
+            param.noVideo = parseBoolean(data: arguments["noVideo"]!, defaultValue: false)
             param.userName = arguments["displayName"]!!;
             param.meetingNumber = arguments["meetingNo"]!!
             param.password = arguments["password"]!!

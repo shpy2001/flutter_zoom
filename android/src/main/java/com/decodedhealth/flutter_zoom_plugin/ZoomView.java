@@ -227,40 +227,64 @@ public class ZoomView  implements PlatformView,
     }
 
     private void inMeetingConfig(MethodCall methodCall){
-        InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
+        // InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
         Map<String, String> options = methodCall.arguments();
-        if(options.get("setMeetingTopic") != "-1"){
+        if(!options.get("setMeetingTopic").equals("-1")){
+            System.out.println("setMeetingTopic " + options.get("setMeetingTopic"));
+            InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
             System.out.println(mInMeetingService.setMeetingTopic(options.get("setMeetingTopic")));
         }
-        if(options.get("allowParticipantsToRename") != "-1"){
+
+        if(!options.get("changeName").equals("-1")){
+            System.out.println("changeName " + options.get("changeName"));
+            InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
+            System.out.println(mInMeetingService.changeName(options.get("changeName"), mInMeetingService.getMyUserID()));
+        }
+       
+        if(!options.get("allowParticipantsToRename").equals("-1")){
+            System.out.println("allowParticipantsToRename " + options.get("allowParticipantsToRename"));
+            InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
             System.out.println(mInMeetingService.allowParticipantsToRename(Boolean.parseBoolean(options.get("allowParticipantsToRename"))));
         }
-        if(options.get("allowParticipantsToUnmuteSelf") != "-1"){
+        if(!options.get("allowParticipantsToUnmuteSelf").equals("-1")){
+            System.out.println("allowParticipantsToUnmuteSelf " + options.get("allowParticipantsToUnmuteSelf"));
+            InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
             System.out.println(mInMeetingService.allowParticipantsToUnmuteSelf(Boolean.parseBoolean(options.get("allowParticipantsToUnmuteSelf"))));
         }
-        if(options.get("muteMyAudio") != "-1"){
+        if(!options.get("muteMyAudio").equals("-1")){
+            System.out.println("muteMyAudio " + options.get("muteMyAudio"));
+            InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
             InMeetingAudioController mInMeetingAudioController = mInMeetingService.getInMeetingAudioController();
             System.out.println(mInMeetingAudioController.muteMyAudio(Boolean.parseBoolean(options.get("muteMyAudio"))));
         }
-        if(options.get("muteMyVideo") != "-1"){
+        if(!options.get("muteMyVideo").equals("-1")){
+            System.out.println("muteMyVideo0 " + options.get("muteMyVideo"));
+            InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
             InMeetingVideoController mInMeetingVideoController = mInMeetingService.getInMeetingVideoController();
             System.out.println(mInMeetingVideoController.muteMyVideo(Boolean.parseBoolean(options.get("muteMyVideo"))));
         }
+
+        
         if(Boolean.parseBoolean(options.get("shouldPinHost"))){
+            System.out.println("shouldPinHost " + options.get("shouldPinHost"));
+            InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
             List<Long> userList = mInMeetingService.getInMeetingUserList();
             if(userList != null){
                 for(int i=0; i<userList.size(); i++) {
                     if(mInMeetingService.isHostUser(userList.get(i))){
                         InMeetingVideoController mInMeetingVideoController = mInMeetingService.getInMeetingVideoController();
-                        mInMeetingVideoController.pinVideo(userList.get(i));
+                        mInMeetingVideoController.pinVideo(true,userList.get(i));
                         break;
                     }
                 }
             }
         }
         if(Boolean.parseBoolean(options.get("shouldSpotlightHost"))){
+            System.out.println("shouldSpotlightHost " + options.get("shouldSpotlightHost"));
+            InMeetingService mInMeetingService = ZoomSDK.getInstance().getInMeetingService();
             List<Long> userList = mInMeetingService.getInMeetingUserList();
-            mInMeetingVideoController.spotLightVideo(true,getMyUserID());
+            InMeetingVideoController mInMeetingVideoController = mInMeetingService.getInMeetingVideoController();
+            mInMeetingVideoController.spotLightVideo(true,mInMeetingService.getMyUserID());
         }
     }
     
