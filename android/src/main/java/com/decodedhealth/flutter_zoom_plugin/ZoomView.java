@@ -376,16 +376,12 @@ public class ZoomView  implements PlatformView,
         opts.participant_id = options.get("participantId"); 
         opts.no_audio = parseBoolean(options, "noAudio", false); 
 
-            int ret = meetingService.startInstantMeeting(context, opts);
+        MeetingSettingsHelper msHelper = zoomSDK.getMeetingSettingsHelper();
+        msHelper.disableShowVideoPreviewWhenJoinMeeting(true);
 
-        System.out.println("SFLINK SDK FLUTTER: startInstantMeeting ret: " + ret);
+        int ret = meetingService.startInstantMeeting(context, opts);
 
-        InMeetingService mInMeetingService = zoomSDK.getInMeetingService();
-        System.out.println("SFLINK SDK FLUTTER: get meetingID" );
-
-        // System.out.println(mInMeetingService.getCurrentMeetingNumber());
-
-        // System.out.println(mInMeetingService.getMeetingPassword());
+       
         result.success(ret);
     }
 
@@ -427,11 +423,11 @@ public class ZoomView  implements PlatformView,
         opts.no_audio = parseBoolean(options, "noAudio", false); 
         opts.participant_id = options.get("webinarToken "); 
 
-        // MeetingSettingsHelper msHelper = zoomSDK.getMeetingSettingsHelper();
-        // msHelper.setAutoConnectVoIPWhenJoinMeeting(true);
-        // msHelper.setMuteMyMicrophoneWhenJoinMeeting(true);
-        // msHelper.setTurnOffMyVideoWhenJoinMeeting(false);
-        // msHelper.disableShowVideoPreviewWhenJoinMeeting(true);
+        MeetingSettingsHelper msHelper = zoomSDK.getMeetingSettingsHelper();
+        msHelper.setAutoConnectVoIPWhenJoinMeeting(true);
+        msHelper.setMuteMyMicrophoneWhenJoinMeeting(parseBoolean(options, "noAudio", false));
+        msHelper.setTurnOffMyVideoWhenJoinMeeting(parseBoolean(options, "noVideo", false));
+        msHelper.disableShowVideoPreviewWhenJoinMeeting(true);
 
         JoinMeetingParams params = new JoinMeetingParams();
 
