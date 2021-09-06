@@ -28,13 +28,6 @@
 - (void)appShareWithView:(nonnull id)view;
 
 /*!
- @brief Share content with ReplayKit.
- @warning Available only for iOS 11 version minimum.
- @warning Once the interface has been called, the view will be updated 2.5s later than the operation. ReplayKit won't send the view out if the UI content does not change.
- */
-- (void)appShareWithReplayKit DEPRECATED_ATTRIBUTE;
-
-/*!
  @brief Set to enable App share.
  @return YES means starting App share successfully, otherwise not.
  */
@@ -69,5 +62,23 @@
  @warning When the customer goes to share a content, consider the pressure of device performance, and use this method to pause share when UI changes, and resume share when UI changes stop, see WebViewController.m in sample project.
  */
 - (BOOL)suspendSharing:(BOOL)suspend;
+
+/*!
+ @brief Is whiteboard legal notice available.
+ @return available or not.
+ */
+- (BOOL)isWhiteboardLegalNoticeAvailable;
+
+/*!
+ @brief Get whiteboard legal notices prompt.
+ @return whiteboard legal notices prompt.
+ */
+- (NSString *_Nullable)getWhiteboardLegalNoticesPrompt;
+
+/*!
+ @brief Get whiteboard legal notices explained.
+ @return whiteboard legal notices explained.
+ */
+- (NSString *_Nullable)getWhiteboardLegalNoticesExplained;
 
 @end

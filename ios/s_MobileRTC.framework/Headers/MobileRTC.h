@@ -24,7 +24,6 @@
 #import <MobileRTC/MobileRTCMeetingService+Reaction.h>
 #import <MobileRTC/MobileRTCMeetingSettings.h>
 #import <MobileRTC/MobileRTCInviteHelper.h>
-#import <MobileRTC/MobileRTCPremeetingService.h>
 #import <MobileRTC/MobileRTCRoomDevice.h>
 #import <MobileRTC/MobileRTCMeetingUserInfo.h>
 #import <MobileRTC/MobileRTCMeetingChat.h>
@@ -172,13 +171,6 @@
  @return The preconfigured authentication service. 
  */
 - (MobileRTCAuthService * _Nullable)getAuthService;
-
-/*!
- @brief Get the default pre-meeting service. 
- @warning Pre-meeting Service will be called once the user logged in with a work email, it is used to schedule/edit/list/delete a meeting.
- @return The preconfigured pre-meeting service.
- */
-- (MobileRTCPremeetingService * _Nullable)getPreMeetingService;
 
 /*!
  @brief Get the default meeting service.  

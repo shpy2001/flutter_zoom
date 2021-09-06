@@ -49,6 +49,30 @@ typedef enum : NSUInteger {
 - (NSArray * _Nullable)getBOMeetingUserList;
 @end
 
+/*!
+@brief enum for BO stop countdown.
+*/
+typedef NS_ENUM(NSUInteger, MobileRTCBOStopCountDown) {
+    MobileRTCBOStopCountDown_Not_CountDown  = 0,
+    MobileRTCBOStopCountDown_Seconds_10,
+    MobileRTCBOStopCountDown_Seconds_15,
+    MobileRTCBOStopCountDown_Seconds_30,
+    MobileRTCBOStopCountDown_Seconds_60,
+    MobileRTCBOStopCountDown_Seconds_120,
+};
+
+/*!
+ @brief BO option.
+ */
+@interface MobileRTCBOOption : NSObject
+
+/*!
+ @brief BO Count Down Second.
+ */
+@property (nonatomic, assign) MobileRTCBOStopCountDown countdownSeconds;
+
+@end
+
 /*
 *    host in master conf     : creator + admin + assistant + dataHelper
 *    host in bo conf         : admin + assistant + dataHelper
@@ -70,34 +94,52 @@ typedef enum : NSUInteger {
 
 /*!
 @brief create a bo meeting.
+@param boName the BO name.
 @return bo meeting id.
 */
-- (NSString * _Nullable)createBO:(NSString * _Nullable)boName;
+- (NSString * _Nullable)createBO:(NSString * _Nonnull)boName;
 
 /*!
 @brief update bo meeting name with bo id.
+@param boId the BO id.
+@param boName the BO name.
 @return update success or not.
 */
-- (BOOL)updateBO:(NSString * _Nullable)boId name:(NSString * _Nullable)boName;
+- (BOOL)updateBO:(NSString * _Nonnull)boId name:(NSString * _Nonnull)boName;
 
 /*!
 @brief remove a bo meeting.
-@return remove bo meting success or not
+@param boId the BO id.
+@return remove bo meting success or not.
 */
-- (BOOL)removeBO:(NSString * _Nullable)boId;
+- (BOOL)removeBO:(NSString * _Nonnull)boId;
 
 /*!
 @brief assign a user to a bo meeting.
-@return assign success or not
+@param boUserId the BO user id.
+@param boId the BO id.
+@return assign success or not.
 */
-- (BOOL)assignUser:(NSString * _Nullable)boUserId toBO:(NSString * _Nullable)boId;
+- (BOOL)assignUser:(NSString * _Nonnull)boUserId toBO:(NSString * _Nonnull)boId;
 
 /*!
 @brief remove a user from a bo meeting.
-@return remove success or not
+@return remove success or not.
 */
-- (BOOL)removeUser:(NSString * _Nullable)boUserId fromBO:(NSString * _Nullable)boId;
+- (BOOL)removeUser:(NSString * _Nonnull)boUserId fromBO:(NSString * _Nonnull)boId;
 
+/*!
+@brief Set BO option.
+@param option, the option that you want to set.
+@return if success the return value is true, otherwise false.
+*/
+- (BOOL)setBOOption:(MobileRTCBOOption *_Nonnull)option;
+
+/*!
+@brief Get BO option.
+@return the BOOption value.
+*/
+- (MobileRTCBOOption * _Nullable)getBOOption;
 @end
 
 /*
@@ -125,34 +167,53 @@ typedef enum : NSUInteger {
 
 /*!
 @brief assign a bo user to a started bo meeting.
+@param boUserId the BO user id.
+@param boId the BO id.
+@return the result of call the method.
 */
-- (BOOL)assignNewUser:(NSString * _Nullable)boUserId toRunningBO:(NSString * _Nullable)boId;
+- (BOOL)assignNewUser:(NSString * _Nonnull)boUserId toRunningBO:(NSString * _Nonnull)boId;
 
 /*!
 @brief switch a user to a new started bo meeting.
+@param boUserId the BO user id.
+@param boId the BO id.
+@return the result of call the method.
 */
-- (BOOL)switchUser:(NSString * _Nullable)boUserId toRunningBO:(NSString * _Nullable)boId;
+- (BOOL)switchUser:(NSString * _Nonnull)boUserId toRunningBO:(NSString * _Nonnull)boId;
 
 /*!
 @brief indicate that the bo can be start or not.
+@return the result of call the method.
 */
 - (BOOL)canStartBO;
 
 /*!
 @brief join bo meeting for designated bo user id.
+@param boUserId the BO user id.
+@return the result of call the method.
 */
-- (BOOL)joinBOByUserRequest:(NSString * _Nullable)boUserId;
+- (BOOL)joinBOByUserRequest:(NSString * _Nonnull)boUserId;
 
 /*!
 @brief reply ignore for the help request from bo attendees
+@param boUserId the BO user id.
+@return the result of call the method.
 */
-- (BOOL)ignoreUserHelpRequest:(NSString * _Nullable)boUserId;
+- (BOOL)ignoreUserHelpRequest:(NSString * _Nonnull)boUserId;
 
 /*!
 @brief broadcase message for all attendees in the meeting.
+@param strMsg the bo message.
+@return the result of call the method.
 */
-- (BOOL)broadcastMessage:(NSString * _Nullable)strMsg;
+- (BOOL)broadcastMessage:(NSString * _Nonnull)strMsg;
 
+/*!
+@brief Host invite user return to main session, When BO is started and user is in BO.
+@param boUserId the bo user id.
+@return true indicates success, otherwise fail.
+*/
+- (BOOL)inviteBOUserReturnToMainSession:(NSString * _Nonnull)boUserId;
 @end
 
 /*
@@ -166,11 +227,14 @@ typedef enum : NSUInteger {
 
 /*!
 @brief join a bo meeting with bo id..
+@param boId the BO id.
+@return the result of call the method.
 */
-- (BOOL)joinBO:(NSString * _Nullable)boId;
+- (BOOL)joinBO:(NSString * _Nonnull)boId;
 
 /*!
 @brief leave joined bo meeting.
+@return the result of call the method.
 */
 - (BOOL)leaveBO;
 
@@ -191,26 +255,31 @@ typedef enum : NSUInteger {
 
 /*!
 @brief join to assined bo meeting.
+@return the result of call the method.
 */
 - (BOOL)joinBO;
 
 /*!
 @brief leave assined bo meeting.
+@return the result of call the method.
 */
 - (BOOL)leaveBO;
 
 /*!
 @brief get bo meeting name.
+@return the bo name.
 */
 - (NSString * _Nullable)getBOName;
 
 /*!
 @brief send help to admin
+@return the result of call the method.
 */
 - (BOOL)requestForHelp;
 
 /*!
-@brief if the host in current bo
+@brief if the host in current bo.
+@return the result of call the method.
 */
 - (BOOL)isHostInThisBO;
 
@@ -228,33 +297,42 @@ typedef enum : NSUInteger {
 
 /*!
 @brief get un assined user list.
+@return the unassigned user list.
 */
 - (NSArray * _Nullable)getUnassignedUserList;
 
 /*!
 @brief get all bo meeting id list.
+@return the BOMeeting id list.
 */
 - (NSArray * _Nullable)getBOMeetingIDList;
 
 /*!
 @brief get bo user object by bo user id
+@param userId the user id.
+@return the object of MobileRTCBOUser.
 */
-- (MobileRTCBOUser * _Nullable)getBOUserByUserID:(NSString * _Nullable)userId;
+- (MobileRTCBOUser * _Nullable)getBOUserByUserID:(NSString * _Nonnull)userId;
 
 /*!
-@brief get bo meeting object by bo meeting id
+@brief get bo meeting object by bo meeting id.
+@param boId the BO id.
+@return the object of MobileRTCBOMeeting.
 */
-- (MobileRTCBOMeeting * _Nullable)getBOMeetingByID:(NSString * _Nullable)boId;
+- (MobileRTCBOMeeting * _Nullable)getBOMeetingByID:(NSString * _Nonnull)boId;
 
 /*!
-@brief get bo meeting name of current BO
+@brief get bo meeting name of current BO.
+@return the current BO name.
 */
 - (NSString  * _Nullable)getCurrentBOName;
 
 /*!
-@brief whether the boUserId is current user
+@brief whether the boUserId is current user.
+@param boUserId the bo user id.
+ @return the result of call the method.
 */
-- (BOOL)isBOUserMyself:(NSString *_Nullable)boUserId;
+- (BOOL)isBOUserMyself:(NSString *_Nonnull)boUserId;
 
 @end
 

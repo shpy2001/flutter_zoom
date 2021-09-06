@@ -73,12 +73,18 @@
 - (BOOL)loginWithEmail:(nonnull NSString*)email password:(nonnull NSString*)password rememberMe:(BOOL)rememberMe;
 
 /*!
- @brief Specify to login MobileRTC with SSO (Single-Sign-On).
- @param token User's token information.
- @return YES indicates to call the method successfully. Otherwise not.
- @warning The method is optional, ignore it if you do not login MobileRTC with SSO.
+* @brief generate the sso login url for specific sso vanity url
+* @param vanityUrl The prefix of vanity url.
+* @return If the function succeeds,will return url of can launch app.
+*/
+- (nullable NSString *)generateSSOLoginWebURL:(nonnull NSString*)vanityUrl;
+
+/**
+ * @brief Login ZOOM with SSO Uri Protocol.
+ * @param uriProtocol For the parameter to be used for sso account login.
+ * @return If the function succeeds, it will return ZoomSDKError_success. Otherwise failed.
  */
-- (BOOL)loginWithSSOToken:(nonnull NSString*)token rememberMe:(BOOL)rememberMe;
+- (MobileRTCLoginFailReason)ssoLoginWithWebUriProtocol:(nonnull NSString*)uriProtocol;
 
 /*!
  @brief Query if it is enabled to login with email.
@@ -119,13 +125,6 @@
  @brief Specify the token expired.
  */
 - (void)onMobileRTCAuthExpired;
-
-/*!
- @brief Specify to get the response of MobileRTC logs in.
- @param returnValue Notify the user when the login state has changed.
- @warning will deprecated,please replace with "- (void)onMobileRTCLoginResult:(MobileRTCLoginFailReason)resultValue".
- */
-- (void)onMobileRTCLoginReturn:(NSInteger)returnValue DEPRECATED_ATTRIBUTE;
 
 /*!
  @brief Specify to get the response of MobileRTC logs in.

@@ -13,13 +13,17 @@
   "properties" : {
 
   },
-  "storage" : "model.espresso.weights",
+  "analyses" : {
+
+  },
   "format_version" : 200,
+  "storage" : "model.espresso.weights",
   "layers" : [
     {
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "217",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -38,8 +42,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -48,6 +52,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "218",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 1,
@@ -78,6 +83,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "220",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 1,
@@ -108,6 +114,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "222",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 1,
@@ -126,8 +133,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -136,6 +143,7 @@
       "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "224",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -154,8 +162,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -164,6 +172,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "227",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 1,
@@ -182,8 +191,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -192,6 +201,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "229",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -210,8 +220,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -220,6 +230,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "231",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -238,39 +249,42 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
     },
     {
-      "alpha" : 1,
       "bottom" : "230,232",
+      "alpha" : 1,
       "operation" : 0,
       "weights" : {
 
       },
       "fused_relu" : 0,
+      "debug_info" : "233",
       "top" : "233",
       "type" : "elementwise",
       "name" : "233",
       "beta" : 0
     },
     {
-      "mode" : 0,
+      "bottom" : "233",
       "weights" : {
 
       },
+      "mode" : 0,
+      "debug_info" : "234",
       "top" : "234",
       "type" : "activation",
-      "name" : "234",
-      "bottom" : "233"
+      "name" : "234"
     },
     {
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "235",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 1,
@@ -289,8 +303,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -299,6 +313,7 @@
       "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "237",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -317,8 +332,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -327,6 +342,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "240",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 1,
@@ -345,8 +361,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -355,6 +371,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "242",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -373,8 +390,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -383,6 +400,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "244",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -401,39 +419,42 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
     },
     {
-      "alpha" : 1,
       "bottom" : "243,245",
+      "alpha" : 1,
       "operation" : 0,
       "weights" : {
 
       },
       "fused_relu" : 0,
+      "debug_info" : "246",
       "top" : "246",
       "type" : "elementwise",
       "name" : "246",
       "beta" : 0
     },
     {
-      "mode" : 0,
+      "bottom" : "246",
       "weights" : {
 
       },
+      "mode" : 0,
+      "debug_info" : "247",
       "top" : "247",
       "type" : "activation",
-      "name" : "247",
-      "bottom" : "246"
+      "name" : "247"
     },
     {
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "248",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 1,
@@ -452,8 +473,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -462,6 +483,7 @@
       "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "250",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -480,8 +502,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -490,6 +512,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "253",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 1,
@@ -508,8 +531,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -518,6 +541,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "255",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -536,8 +560,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -546,6 +570,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "257",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -564,39 +589,42 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
     },
     {
-      "alpha" : 1,
       "bottom" : "256,258",
+      "alpha" : 1,
       "operation" : 0,
       "weights" : {
 
       },
       "fused_relu" : 0,
+      "debug_info" : "259",
       "top" : "259",
       "type" : "elementwise",
       "name" : "259",
       "beta" : 0
     },
     {
-      "mode" : 0,
+      "bottom" : "259",
       "weights" : {
 
       },
+      "mode" : 0,
+      "debug_info" : "260",
       "top" : "260",
       "type" : "activation",
-      "name" : "260",
-      "bottom" : "259"
+      "name" : "260"
     },
     {
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "261",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 1,
@@ -627,6 +655,7 @@
       "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "263",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 0,
@@ -645,8 +674,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -655,6 +684,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "265",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 1,
@@ -673,8 +703,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -683,6 +713,7 @@
       "pad_r" : 2,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "268",
       "pad_fill_mode" : 0,
       "pad_b" : 2,
       "pad_l" : 2,
@@ -701,8 +732,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "dilation_x" : 2,
       "pad_value" : 0,
       "Ny" : 3,
@@ -713,6 +744,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "270",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -731,8 +763,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -741,6 +773,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "272",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -759,39 +792,42 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
     },
     {
-      "alpha" : 1,
       "bottom" : "271,273",
+      "alpha" : 1,
       "operation" : 0,
       "weights" : {
 
       },
       "fused_relu" : 0,
+      "debug_info" : "274",
       "top" : "274",
       "type" : "elementwise",
       "name" : "274",
       "beta" : 0
     },
     {
-      "mode" : 0,
+      "bottom" : "274",
       "weights" : {
 
       },
+      "mode" : 0,
+      "debug_info" : "275",
       "top" : "275",
       "type" : "activation",
-      "name" : "275",
-      "bottom" : "274"
+      "name" : "275"
     },
     {
       "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "276",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 0,
@@ -810,8 +846,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -820,6 +856,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "278",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 1,
@@ -838,8 +875,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -848,6 +885,7 @@
       "pad_r" : 4,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "281",
       "pad_fill_mode" : 0,
       "pad_b" : 4,
       "pad_l" : 4,
@@ -866,8 +904,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "dilation_x" : 4,
       "pad_value" : 0,
       "Ny" : 3,
@@ -878,6 +916,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "283",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -896,8 +935,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -906,6 +945,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "285",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -924,39 +964,42 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
     },
     {
-      "alpha" : 1,
       "bottom" : "284,286",
+      "alpha" : 1,
       "operation" : 0,
       "weights" : {
 
       },
       "fused_relu" : 0,
+      "debug_info" : "287",
       "top" : "287",
       "type" : "elementwise",
       "name" : "287",
       "beta" : 0
     },
     {
-      "mode" : 0,
+      "bottom" : "287",
       "weights" : {
 
       },
+      "mode" : 0,
+      "debug_info" : "288",
       "top" : "288",
       "type" : "activation",
-      "name" : "288",
-      "bottom" : "287"
+      "name" : "288"
     },
     {
       "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "289",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 0,
@@ -975,8 +1018,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -985,6 +1028,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "291",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 1,
@@ -1003,8 +1047,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -1013,6 +1057,7 @@
       "pad_r" : 8,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "294",
       "pad_fill_mode" : 0,
       "pad_b" : 8,
       "pad_l" : 8,
@@ -1031,8 +1076,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "dilation_x" : 8,
       "pad_value" : 0,
       "Ny" : 3,
@@ -1043,6 +1088,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "296",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -1061,8 +1107,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -1071,6 +1117,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "298",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -1089,39 +1136,42 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
     },
     {
-      "alpha" : 1,
       "bottom" : "297,299",
+      "alpha" : 1,
       "operation" : 0,
       "weights" : {
 
       },
       "fused_relu" : 0,
+      "debug_info" : "300",
       "top" : "300",
       "type" : "elementwise",
       "name" : "300",
       "beta" : 0
     },
     {
-      "mode" : 0,
+      "bottom" : "300",
       "weights" : {
 
       },
+      "mode" : 0,
+      "debug_info" : "301",
       "top" : "301",
       "type" : "activation",
-      "name" : "301",
-      "bottom" : "300"
+      "name" : "301"
     },
     {
       "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "302",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 0,
@@ -1140,8 +1190,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -1150,6 +1200,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "304",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 1,
@@ -1168,8 +1219,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -1178,6 +1229,7 @@
       "pad_r" : 2,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "307",
       "pad_fill_mode" : 0,
       "pad_b" : 2,
       "pad_l" : 2,
@@ -1196,8 +1248,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "dilation_x" : 2,
       "pad_value" : 0,
       "Ny" : 3,
@@ -1208,6 +1260,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "309",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -1226,8 +1279,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -1236,6 +1289,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "311",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -1254,39 +1308,42 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
     },
     {
-      "alpha" : 1,
       "bottom" : "310,312",
+      "alpha" : 1,
       "operation" : 0,
       "weights" : {
 
       },
       "fused_relu" : 0,
+      "debug_info" : "313",
       "top" : "313",
       "type" : "elementwise",
       "name" : "313",
       "beta" : 0
     },
     {
-      "mode" : 0,
+      "bottom" : "313",
       "weights" : {
 
       },
+      "mode" : 0,
+      "debug_info" : "314",
       "top" : "314",
       "type" : "activation",
-      "name" : "314",
-      "bottom" : "313"
+      "name" : "314"
     },
     {
       "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "315",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 0,
@@ -1305,8 +1362,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -1315,6 +1372,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "317",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 1,
@@ -1333,8 +1391,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -1343,6 +1401,7 @@
       "pad_r" : 4,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "320",
       "pad_fill_mode" : 0,
       "pad_b" : 4,
       "pad_l" : 4,
@@ -1361,8 +1420,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "dilation_x" : 4,
       "pad_value" : 0,
       "Ny" : 3,
@@ -1373,6 +1432,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "322",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -1391,8 +1451,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -1401,6 +1461,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "324",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -1419,39 +1480,42 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
     },
     {
-      "alpha" : 1,
       "bottom" : "323,325",
+      "alpha" : 1,
       "operation" : 0,
       "weights" : {
 
       },
       "fused_relu" : 0,
+      "debug_info" : "326",
       "top" : "326",
       "type" : "elementwise",
       "name" : "326",
       "beta" : 0
     },
     {
-      "mode" : 0,
+      "bottom" : "326",
       "weights" : {
 
       },
+      "mode" : 0,
+      "debug_info" : "327",
       "top" : "327",
       "type" : "activation",
-      "name" : "327",
-      "bottom" : "326"
+      "name" : "327"
     },
     {
       "pad_r" : 0,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "328",
       "pad_fill_mode" : 0,
       "pad_b" : 1,
       "pad_l" : 0,
@@ -1470,8 +1534,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 3,
       "n_parallel" : 1
@@ -1480,6 +1544,7 @@
       "pad_r" : 1,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "330",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 1,
@@ -1498,8 +1563,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -1508,6 +1573,7 @@
       "pad_r" : 8,
       "fused_relu" : 1,
       "fused_tanh" : 0,
+      "debug_info" : "333",
       "pad_fill_mode" : 0,
       "pad_b" : 8,
       "pad_l" : 8,
@@ -1526,8 +1592,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 3,
+      "pad_mode" : 0,
       "dilation_x" : 8,
       "pad_value" : 0,
       "Ny" : 3,
@@ -1538,6 +1604,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "335",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -1556,8 +1623,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -1566,6 +1633,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "337",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -1584,39 +1652,42 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
     },
     {
-      "alpha" : 1,
       "bottom" : "336,338",
+      "alpha" : 1,
       "operation" : 0,
       "weights" : {
 
       },
       "fused_relu" : 0,
+      "debug_info" : "339",
       "top" : "339",
       "type" : "elementwise",
       "name" : "339",
       "beta" : 0
     },
     {
-      "mode" : 0,
+      "bottom" : "339",
       "weights" : {
 
       },
+      "mode" : 0,
+      "debug_info" : "340",
       "top" : "340",
       "type" : "activation",
-      "name" : "340",
-      "bottom" : "339"
+      "name" : "340"
     },
     {
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "341",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -1635,8 +1706,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -1645,6 +1716,7 @@
       "pad_r" : 0,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "342",
       "pad_fill_mode" : 0,
       "pad_b" : 0,
       "pad_l" : 0,
@@ -1662,8 +1734,8 @@
       "weights" : {
 
       },
-      "pad_mode" : 0,
       "Nx" : 1,
+      "pad_mode" : 0,
       "pad_value" : 0,
       "Ny" : 1,
       "n_parallel" : 1
@@ -1672,6 +1744,7 @@
       "pad_r" : 4,
       "fused_relu" : 0,
       "fused_tanh" : 0,
+      "debug_info" : "343",
       "pad_fill_mode" : 0,
       "pad_b" : 4,
       "pad_l" : 4,
@@ -1699,14 +1772,18 @@
       "n_parallel" : 1
     },
     {
-      "mode" : 3,
+      "bottom" : "343",
       "weights" : {
 
       },
+      "mode" : 3,
+      "debug_info" : "output",
       "top" : "output",
       "type" : "activation",
       "name" : "output",
-      "bottom" : "343"
+      "attributes" : {
+        "is_output" : 1
+      }
     }
   ]
 }

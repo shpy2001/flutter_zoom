@@ -14,7 +14,7 @@ typedef enum {
     ///Chat to panelists in the webinar.
     MobileRTCChatGroup_Panelists             = 1,
     ///Chat to waiting room user
-    MobileRTCChatGroup_SilentModeUsers       = 2,
+    MobileRTCChatGroup_WaitingRoomUsers       = 2,
 }MobileRTCChatGroup;
 
 @interface MobileRTCMeetingService (Chat)
@@ -41,9 +41,27 @@ typedef enum {
 
 /*!
  @brief get Attendee Chat Priviledge when in-meeting
- @return the result of attendee chat priviledge;
+ @return the result of attendee chat priviledge.
  */
 - (MobileRTCMeetingChatPriviledgeType)getAttendeeChatPriviledge;
+
+/*!
+ @brief Is meeting chat legal notice available.
+ @return available or not.
+ */
+- (BOOL)isMeetingChatLegalNoticeAvailable;
+
+/*!
+ @brief Get chat legal notice prompt.
+ @return chat legal notice prompt.
+ */
+- (NSString *_Nullable)getChatLegalNoticesPrompt;
+
+/*!
+ @brief Get explained text for chat legal notice.
+ @return explained text for chat legal notice.
+ */
+- (NSString *_Nullable)getChatLegalNoticesExplained;
 
 /*!
  @brief Get in-meeting chat message. 

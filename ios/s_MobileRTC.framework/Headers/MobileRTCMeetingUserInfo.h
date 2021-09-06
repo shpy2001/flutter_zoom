@@ -123,9 +123,9 @@ typedef NS_ENUM(NSUInteger, MobileRTCFeedbackType) {
  */
 @property (nonatomic, assign) BOOL             isMySelf;
 /*!
- @brief The ID of participantID.
+ @brief The value of customerKey.
  */
-@property (nonatomic, retain) NSString* _Nullable       participantID;
+@property (nonatomic, retain) NSString* _Nullable       customerKey;
 /*!
  @brief The screen name of user.
  */
@@ -153,7 +153,7 @@ typedef NS_ENUM(NSUInteger, MobileRTCFeedbackType) {
 /*!
  @brief User enter the waiting room when joins the meeting.
  */
-@property (nonatomic, assign) BOOL             inSilentMode;
+@property (nonatomic, assign) BOOL             inWaitingRoom;
 /*!
  @brief Query if the current user is the co-host.
  */

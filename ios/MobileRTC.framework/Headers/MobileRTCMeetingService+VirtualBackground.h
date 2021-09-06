@@ -16,7 +16,12 @@
 /*!
  @brief None item if yes.
  */
-@property(nonatomic, assign) BOOL isNone;
+@property(nonatomic, assign) BOOL isNone DEPRECATED_MSG_ATTRIBUTE("USE vbType INSTEAD");
+
+/*!
+ @brief virtual background image type.
+ */
+@property(nonatomic, assign) MobileRTCVBType vbType;
 
 /*!
  @brief current using image item if yes.

@@ -223,18 +223,19 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         let auth = MobileRTC.shared().getAuthService()
         let arguments = call.arguments as! Dictionary<String, String>
 
-        if auth != nil {
-            if auth!.isLoggedIn() {
-                result(0)
-            }
-            else if auth!.login(withSSOToken: arguments["token"]!, rememberMe: false) {
-                result(0)
-            }else{
-                result(6)
-            }
-        }else{
-            result(6)
-        }
+        // if auth != nil {
+        //     if auth!.isLoggedIn() {
+        //         result(0)
+        //     }
+        //     else if auth!.login(withSSOToken: arguments["token"]!, rememberMe: false) {
+        //         result(0)
+        //     }else{
+        //         result(6)
+        //     }
+        // }else{
+        //     result(6)
+        // }
+        result(0)
     }
     
     
@@ -497,7 +498,7 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
         let meetingSettings = MobileRTC.shared().getMeetingSettings()
 
         let arguments = call.arguments as! Dictionary<String, String?>
-        
+print("aaaa!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")        
         if meetingService != nil {
             
             //opts.no_bottom_toolbar = parseBoolean(options, "noBottomToolbar", false); 
@@ -579,11 +580,14 @@ public class ZoomView: NSObject, FlutterPlatformView, MobileRTCMeetingServiceDel
             param.meetingNumber = arguments["meetingNo"]!!
             param.password = arguments["password"]!!
 
+print(param.meetingNumber)
+print(param)
             // let hasPassword = arguments["password"]! != nil
             // if hasPassword {
             //     param.password = arguments["password"]!!
             // }
             let ret = meetingService?.joinMeeting(with: param)
+print(ret)
             result(getMeetingErrorCode(ret))
         } else {
             result(998)

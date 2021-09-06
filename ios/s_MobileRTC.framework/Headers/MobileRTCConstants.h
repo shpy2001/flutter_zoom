@@ -62,6 +62,8 @@ typedef NS_ENUM(NSUInteger, MobileRTCLoginFailReason) {
     MobileRTCLoginFailReason_PhoneNumberFormatInValid,
     ///Login token invalid.
     MobileRTCLoginFailReason_LoginTokenInvalid,
+    /// User disagree login Disclaimer
+    MobileRTCLoginFailReason_UserDisagreeLoginDisclaimer,
     ///Login fail other reason.
     MobileRTCLoginFailReason_OtherIssue = 100,
 };
@@ -128,6 +130,8 @@ typedef NS_ENUM(NSUInteger, MobileRTCMeetError) {
     MobileRTCMeetError_WriteConfigFile                  = 50,
     ///Meeting is removed by the host.
     MobileRTCMeetError_RemovedByHost                    = 61,
+    ///Forbidden to join meeting.
+    MobileRTCMeetError_HostDisallowOutsideUserJoin      = 62,
     ///Invalid arguments.
     MobileRTCMeetError_InvalidArguments                 = MobileRTCMeetError_WriteConfigFile + 100,
     ///Invalid user Type.
@@ -346,6 +350,8 @@ typedef NS_ENUM(NSUInteger, MobileRTCAudioError) {
     MobileRTCAudioError_AudioNotConnected                         = 2,
     ///User can not unmute his Audio.
     MobileRTCAudioError_CannotUnmuteMyAudio                       = 3,
+    /// Failed
+    MobileRTCAudioError_Failed                                    = 4
 };
 
 
@@ -716,16 +722,22 @@ typedef NS_ENUM(NSUInteger, MobileRTC_ZoomLocale) {
 /*!
  @brief for SMS service usage.
  */
-typedef NS_ENUM(NSUInteger, MobileRTCSMSServiceErr) {
-    Unknown = 0,
-    Success,
-    Retrieve_SendSMSFailed,
-    Retrieve_InvalidPhoneNum,
-    Retrieve_PhoneNumAlreadyBound,
-    Retrieve_PhoneNumSendTooFrequent,
-    Verify_CodeIncorrect,
-    Verify_CodeExpired,
-    Verify_UnknownError,
+typedef NS_ENUM(NSUInteger, MobileRTCSMSVerifyResult) {
+    MobileRTCSMSVerifyResult_Succ = 0,
+    MobileRTCSMSVerifyResult_RealNameAuthErrorIdentifyCode,
+    MobileRTCSMSVerifyResult_RealNameAuthIdentifyCodeExpired,
+    MobileRTCSMSVerifyResult_RealNameAuthBypassVerify,
+    MobileRTCSMSVerifyResult_RealNameAuthUnknownError,
+};
+
+typedef NS_ENUM(NSUInteger, MobileRTCSMSRetrieveResult) {
+    MobileRTCSMSRetrieveResult_Succ = 0,
+    MobileRTCSMSRetrieveResult_SendSMSFailed,
+    MobileRTCSMSRetrieveResult_RequestFailed,
+    MobileRTCSMSRetrieveResult_InvalidPhoneNum,
+    MobileRTCSMSRetrieveResult_PhoneNumAlreadyBound,
+    MobileRTCSMSRetrieveResult_PhoneNumSendTooFrequent,
+    MobileRTCSMSRetrieveResult_BypassVerify,
 };
 
 /*!
@@ -743,6 +755,17 @@ typedef NS_ENUM(NSUInteger, FreeMeetingNeedUpgradeType) {
     FreeMeetingNeedUpgradeType_NONE = 0,
     FreeMeetingNeedUpgradeType_BY_ADMIN,
     FreeMeetingNeedUpgradeType_BY_GIFTURL,
+};
+
+/*!
+ @brief enum for BO status.
+ */
+typedef NS_ENUM(NSUInteger, MobileRTCBOStatus) {
+    MobileRTCBOStatus_Invalid = 0,
+    MobileRTCBOStatus_Edit = 1,    //<edit & assign
+    MobileRTCBOStatus_Started,    //<BO is started
+    MobileRTCBOStatus_Stopping,    //<stopping BO
+    MobileRTCBOStatus_Ended   //<BO is ended
 };
 
 /*!
@@ -857,4 +880,34 @@ typedef NS_ENUM(NSUInteger, MobileRTCRecordingStatus) {
     MobileRTCRecording_Connecting,
 };
 
+/*!
+ @brief Enumeration of LockShare Status changed.
+ */
+typedef NS_ENUM(NSUInteger, MobileRTCShareSettingType)
+{
+    /// share settings type none
+    MobileRTCShareSettingType_None,
+    /// Only host can share, the same as "lock share"
+    MobileRTCShareSettingType_LockShare,
+    /// Anyone can share, but one sharing only at one moment, and only host can grab other's sharing
+    MobileRTCShareSettingType_HostGrab,
+    /// Anyone can share, but one sharing only at one moment, and anyone can grab other's sharing
+    MobileRTCShareSettingType_AnyoneGrab,
+    /// Anyone can share, Multi-share can exist at the same time
+    MobileRTCShareSettingType_MultiShare,
+    
+};
+
+/*!
+ @brief Enumeration of virtual background type in MobileRTCVirtualBGImageInfo .
+ */
+typedef NS_ENUM(NSInteger, MobileRTCVBType)
+{
+    /// virtual background type none
+    MobileRTCVBType_None,
+    /// virtual background type blur
+    MobileRTCVBType_Blur,
+    /// virtual background type with image
+    MobileRTCVBType_Item
+};
 

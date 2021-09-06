@@ -21,7 +21,7 @@
 @property (assign, nonatomic) BOOL meetingTitleHidden;
 
 /*!
- @brief Show/Hide meeting title in the meeting bar.
+ @brief Show/Hide meeting password in the meeting bar.
  @warning The function only for Zoom UI.
  */
 @property (assign, nonatomic) BOOL meetingPasswordHidden;
@@ -94,6 +94,12 @@
 @property (assign, nonatomic) BOOL disconnectAudioHidden;
 
 /*!
+ @brief Show/Hide record button
+ @warning The function only for Zoom UI.
+ */
+@property (assign, nonatomic) BOOL recordButtonHidden;
+
+/*!
  @brief Enable/Disable Kubi Device in the meeting.
  @warning The option is available only on iPad if you want to use Kubi device. 
  @warning The function only for Zoom UI.
@@ -108,7 +114,7 @@
 @property (assign, nonatomic) BOOL thumbnailInShare;
 
 /*!
- @brief Show/Hide LEAVE MEETING item for the host.
+ @brief Show/Hide LEAVE MEETING item for the host in the pop up view after click the end/leave meeting button in the meeting bar.
  @warning The function only for Zoom UI.
  */
 @property (assign, nonatomic) BOOL hostLeaveHidden;
@@ -222,7 +228,7 @@
 - (BOOL)faceBeautyEnabled;
 
 /*!
- @brief Set Touch up my appearance enable or not
+ @brief Set Touch up my appearance enable or not.
  @param muted YES means successful, otherwise not.
  */
 - (void)setFaceBeautyEnabled:(BOOL)enable;
@@ -298,13 +304,13 @@
 - (void)disableMinimizeMeeting:(BOOL)disabled;
 
 /*!
- @brief Query if it is disabled to Minimize Meeting.
+ @brief Query if it is disabled free meeting upgrade tips.
  @return YES means disabled, otherwise not.
  */
 - (BOOL)freeMeetingUpgradeTipsDisabled;
 
 /*!
-@brief Set to disable the Minimize Meeting.
+@brief Set to disable free meeting upgrade tips.
 @param disabled The option value.
 */
 - (void)disableFreeMeetingUpgradeTips:(BOOL)disabled;

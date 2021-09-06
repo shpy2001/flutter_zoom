@@ -176,4 +176,22 @@ typedef enum {
  */
 - (BOOL)canDoAnnotation;
 
+/*!
+ @brief Is annotation legal notice available.
+ @return available or not.
+ */
+- (BOOL)isAnnotationLegalNoticeAvailable;
+
+/*!
+ @brief Get annotation over share legal notices prompt.
+ @return annotation over share legal notices prompt.
+ */
+- (NSString *_Nullable)getAnnotationLegalNoticesPrompt;
+
+/*!
+ @brief Get annotation over share legal notices explained.
+ @return annotation over share legal notices explained.
+ */
+- (NSString *_Nullable)getAnnotationLegalNoticesExplained;
+
 @end

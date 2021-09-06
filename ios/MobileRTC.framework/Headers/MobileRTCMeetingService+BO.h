@@ -57,6 +57,12 @@
 */
 - (BOOL)isInBOMeeting;
 
+/*!
+@brief Get current BO status
+@return The return value is a enum for bo status.
+*/
+- (MobileRTCBOStatus)getBOStatus;
+
 @end
 
 
