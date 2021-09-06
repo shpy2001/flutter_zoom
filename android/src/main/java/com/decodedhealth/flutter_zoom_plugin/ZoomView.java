@@ -373,7 +373,7 @@ public class ZoomView  implements PlatformView,
         opts.no_unmute_confirm_dialog = parseBoolean(options, "noUnmuteConfirmDialog", false); 
         opts.no_video = parseBoolean(options, "noVideo", false); 
         opts.no_webinar_register_dialog = parseBoolean(options, "noWebinarRegisterDialog", false); 
-        opts.participant_id = options.get("participantId"); 
+        opts.customer_key = options.get("participantId"); 
         opts.no_audio = parseBoolean(options, "noAudio", false); 
 
         MeetingSettingsHelper msHelper = zoomSDK.getMeetingSettingsHelper();
@@ -419,9 +419,9 @@ public class ZoomView  implements PlatformView,
         opts.no_unmute_confirm_dialog = parseBoolean(options, "noUnmuteConfirmDialog", false); 
         opts.no_video = parseBoolean(options, "noVideo", false); 
         opts.no_webinar_register_dialog = parseBoolean(options, "noWebinarRegisterDialog", false); 
-        opts.participant_id = options.get("participantId"); 
+        opts.customer_key = options.get("participantId"); 
         opts.no_audio = parseBoolean(options, "noAudio", false); 
-        opts.participant_id = options.get("webinarToken "); 
+       
 
         MeetingSettingsHelper msHelper = zoomSDK.getMeetingSettingsHelper();
         msHelper.setAutoConnectVoIPWhenJoinMeeting(true);
@@ -505,7 +505,7 @@ public class ZoomView  implements PlatformView,
             System.out.println("ZOOM SDK FLUTTER : isLoggedIn ");
             result.success(zoomSDK.tryAutoLoginZoom());
         }else{
-            result.success(zoomSDK.loginWithSSOToken(options.get("token")));
+            // result.success(zoomSDK.loginWithSSOToken(options.get("token")));
         }
     }
     
