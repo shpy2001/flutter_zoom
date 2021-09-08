@@ -122,7 +122,7 @@ public class ZoomView  implements PlatformView,
             return;
         }
 
-//
+
         ZoomSDKInitParams initParams = new ZoomSDKInitParams();
         initParams.jwtToken = options.get("sdkToken");
         initParams.appKey = options.get("appKey");
